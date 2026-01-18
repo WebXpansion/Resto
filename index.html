@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restaurant AR Menu</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Pacifico&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+  <!-- INTRO LOADER -->
+  <div id="intro">
+    <div class="intro-content">
+      <span class="intro-brand">Michelet</span>
+      <h1 class="intro-title">
+        <span id="intro-discover">Découvrez</span><br />
+        <span id="intro-menu">Notre Menu</span>
+      </h1>
+    </div>
+  </div>
+
+
+
+  <!-- STEP TITLE -->
+  <div class="step-header">
+    <span class="logo-site">Michelet</span>
+    <span id="step-prefix">Choisissez une</span>
+    <h1 id="step-title">Boisson</h1>
+  </div>
+
+  <!-- GRID -->
+  <div id="menu-grid" class="grid"></div>
+
+  <!-- FOOTER -->
+  <div class="step-footer">
+    <button id="skip">Pas de boisson</button>
+    <button id="next" disabled>Faites un choix</button>
+  </div>
+
+  <!-- OVERLAY -->
+<div id="overlay" class="overlay hidden"></div>
+<!-- BOTTOM SHEET -->
+<div id="sheet" class="sheet hidden">
+
+  <div class="sheet-handle"></div>
+
+  <div class="sheet-top">
+    <button id="sheet-back" class="sheet-back">Retour</button>
+  </div>
+
+  <div class="sheet-header">
+    <h2 id="sheet-title"></h2>
+    <span id="sheet-price"></span>
+    <p id="sheet-desc"></p>
+  </div>
+
+  <div class="sheet-canvas">
+    <div id="viewer-loader" class="viewer-loader">
+      <span>Chargement…</span>
+    </div>
+
+    <canvas id="canvas"></canvas>
+  </div>
+
+
+  <!-- BOUTON AR -->
+  <div class="btn-overlay">
+    <button id="ar" class="ar-btn">
+      Voir sur la table
+    </button>
+
+    <!-- BOUTON DE VALIDATION -->
+    <button id="overlay-select" class="btn-select">
+      Sélectionner ce plat
+    </button>
+  </div>
+
+
+</div>
+
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>

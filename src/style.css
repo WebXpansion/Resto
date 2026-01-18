@@ -1,0 +1,368 @@
+button {
+  appearance: none;
+  -webkit-appearance: none;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+}
+
+body {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease;
+}
+
+h1,
+.filters,
+.filters button,
+.card,
+.card .info,
+.sheet,
+.sheet-header,
+.mode-switch,
+.mode-switch span {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease;
+}
+
+
+* {
+  -webkit-tap-highlight-color: transparent;
+}
+
+
+/* =========================
+   LOADER canva
+========================= */
+
+.viewer-loader {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 16px;
+  background: #FFFFFF;
+  z-index: 4;
+  font-family: "roboto", sans-serif;
+  font-size: 14px;
+  color: #000000;
+  border-radius: 12px;
+    background: #fff;
+    border: 1px solid #E6E6E6;
+
+  transition: opacity 0.3s ease;
+}
+
+.viewer-loader.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+
+
+
+.ar-btn.disabled {
+  color: #000000a3;
+  cursor: default;
+  font-family: roboto, sans-serif;
+  font-weight: 500;
+  font-size: 14px;
+  text-align: left;
+  margin: 20px 12px 20px 12px;
+  background-color: #0000000f;
+  padding: 14px;
+  border-radius: 12px;
+  position: relative;
+}
+
+.menu-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 12px 10px;
+}
+
+.mode-switch {
+  display: flex;
+  gap: 4px;
+  background: #00000010;
+  border-radius: 20px;
+  padding: 4px;
+  border: none;
+}
+
+.mode-switch span {
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 14px;
+  cursor: pointer;
+  font-family: "roboto", sans-serif;
+  color: #000;
+}
+
+.mode-switch span.active {
+  background: #000;
+  color: #fff;
+}
+
+/* ===============================
+   🌙 MODE SOIR
+=============================== */
+
+body.soir {
+  background-color: #1b1b19;
+}
+
+
+
+body.soir body {
+  background-color: #1b1b19;
+}
+
+/* Titre */
+body.soir h1 {
+  color: white;
+}
+
+/* Filtres */
+body.soir .filters {
+  border-color: #ffffff2a;
+}
+
+body.soir .filters button {
+  background: #ffffff12;
+  color: white;
+}
+
+body.soir .filters button.active {
+  background: white;
+  color: black;
+}
+
+/* Cartes */
+body.soir .card {
+  background: #2a2a26;
+  border:1px solid #303030;
+}
+
+/* Texte cartes */
+body.soir .card .info {
+  color: white;
+}
+
+
+
+body.soir .mode-switch {
+  background: #ffffff10;
+}
+
+
+body.soir .mode-switch span {
+  color: #ffffff63;
+}
+
+body.soir .sheet{
+  background: #1b1b19;
+}
+
+body.soir .sheet-header {
+  color: white;
+}
+
+body.soir .sheet-back {
+  border: 1px solid #ffffff26;
+  color: #ffffff;
+
+}
+
+body.soir .sheet-canvas canvas {
+  background: #ffffff12;
+  border: 1px solid #ffffff1f;
+}
+
+body.soir .ar-btn {
+  background: #ffffff;
+  color: #000;
+  
+}
+
+body.soir .viewer-loader {
+  
+  color: #ffffff;
+  background: #2b2b29;
+  border: 1px solid #454543;
+}
+
+body.soir .ar-btn svg path{
+  fill: black;
+}
+
+
+
+body.soir .mode-switch span.active{
+  color:white;
+}
+
+
+/* =========================
+   INTRO LOADER
+========================= */
+
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+
+  background-image: url('/images/fond-loading.webp'); /* ⬅️ mets ton image ici */
+  background-size: cover;
+  background-position: center;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  transition: opacity 0.8s ease, visibility 0.8s ease;
+}
+
+#intro.hidden {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* Contenu centré */
+.intro-content {
+  text-align: center;
+  color: white;
+}
+
+/* Michelet */
+.intro-brand {
+  display: block;
+  margin-bottom: 20px;
+  font-family: "Italiana", serif;
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+/* Titres */
+.intro-title {
+  font-family: "Italiana", serif;
+  font-size: 42px;
+  line-height: 1.1;
+}
+
+/* Texte animé */
+.intro-title span {
+  display: inline-block;
+  opacity: 0;
+  filter: blur(10px);
+  transform: translateY(10px);
+  transition:
+    opacity 0.6s ease,
+    filter 0.6s ease,
+    transform 0.6s ease;
+}
+
+.intro-title span.visible {
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(0);
+}
+
+.step-header {
+  text-align: center;
+  padding: 40px 20px 40px;
+  background-color: #F8F1DD;
+  font-family: "italiana";
+}
+
+#step-prefix,
+#step-title {
+  display: block;
+  opacity: 0;
+  filter: blur(10px);
+  transition: opacity 0.6s ease, filter 0.6s ease;
+}
+
+#step-prefix.visible,
+#step-title.visible {
+  opacity: 1;
+  filter: blur(0);
+}
+
+#step-prefix {
+  font-size: 16px;
+}
+
+#step-title {
+  font-size: 42px;
+}
+
+.step-footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  background-color: #F8F1DD;
+  padding: 10px 15px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 20;
+}
+
+button#skip {
+  width: 50%;
+  padding: 12px;
+  border: 1px solid #DDD6C5;
+  border-radius: 8px;
+}
+
+button#next {
+  width: 50%;
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
+  background-color: #000000;
+}
+
+span.logo-site {
+  margin-bottom: 32px;
+  display: block;
+  font-family: "italiana";
+  font-weight: 800;
+  font-size: 20px;
+}
+
+#next:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.btn-overlay {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 20px 15px;
+}
+
+.btn-select{
+  margin: 0px 15px;
+  padding: 24px 24px;
+  border-radius: 14px;
+  border: none;
+  background: none;
+  font-family: "roboto", sans-serif;
+  border: 1px solid #000;
+  font-weight: 500;
+  color: black;
+  font-size: 16px!important;
+  display: flex
+;
+  justify-content: center;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}

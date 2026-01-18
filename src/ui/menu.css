@@ -1,0 +1,376 @@
+
+
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+  background-color: #FCF9F1;
+}
+
+
+h3,
+span,
+p,
+button{
+  margin: 0;
+}
+
+
+
+  
+  .filters {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    margin: 8px 12px;
+    padding: 6px;
+    border: 1px solid #0000001c;
+    border-radius: 12px;
+    justify-content: space-between;
+    overflow-x: scroll;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; 
+}
+
+.filters::-webkit-scrollbar {
+  display: none;
+}
+
+  
+.filters button {
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: none;
+  background: #0000000a;
+  width: 80px;
+  flex: 1 0 auto;
+  font-family: "roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 14px;
+}
+  
+  .filters button.active {
+    background: black;
+    color: white;
+  }
+  
+  .grid {
+    display: grid;
+    gap: 6px;
+    padding: 12px 12px 80px 12px;
+  
+    grid-template-columns: repeat(1, minmax(0, 1fr));
+  }
+  
+  
+  /* iPad */
+  @media (min-width: 768px) {
+    .grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  /* Desktop */
+  @media (min-width: 1200px) {
+    .grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+  /* =========================
+   CARTES – DESIGN ÉTAPES
+========================= */
+
+.card {
+  display: flex;
+  gap: 16px;
+
+  background: #FCF9F1;
+  border: 1px solid #E6E0D4;
+  border-radius: 12px;
+
+  height: auto;
+
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease;
+    overflow: hidden;
+}
+
+/* Image à gauche */
+.card img {
+  width: 110px;
+  object-fit: cover;
+  height: 100%;
+  flex-shrink: 0;
+}
+
+/* Contenu */
+.card .info {
+  position: static;
+  padding: 0;
+  color: #000;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  width: 100%;
+}
+
+
+.info-titre-btn {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+/* Description */
+.card .info p {
+  display: block;
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: 0.7;
+}
+
+/* Prix */
+.card .info span {
+  font-size: 18px;
+  font-weight: 500;
+
+}
+
+/* Bouton Choisir */
+.select-btn {
+  align-self: flex-end;
+
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+
+  background: none;
+  border: none;
+  color: #000;
+  cursor: pointer;
+  padding: 6px 12px;
+  background-color: #eceae3;
+  border-radius: 6px;
+}
+
+/* =========================
+   CARTE SÉLECTIONNÉE
+========================= */
+
+.card.selected {
+  background: #F8F1DD;
+  border-color: #D8D1B8;
+}
+
+/* Bouton sélectionné */
+.card.selected .select-btn {
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+
+  /* Header top sheet */
+.sheet-top {
+  padding: 12px 16px 0;
+}
+
+/* Bouton retour */
+.sheet-back {
+  padding: 8px 12px;
+  border: 1px solid #000;
+  border-radius: 10px;
+  background: transparent;
+  color: #000;
+  font-size: 14px;
+
+  appearance: none;
+  -webkit-appearance: none;
+
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+/* Feedback tap iOS */
+.sheet-back:active {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+
+
+
+  h1{
+    font-family: "Italiana", sans-serif;
+      font-weight: 800;
+      font-style: normal;
+      margin: 0;
+  }
+  
+
+
+  .info-titre {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.info-titre h3{
+  font-family: "italiana";
+  font-size: 16px;
+  font-weight: 900;
+}
+
+
+
+  /* Overlay fond sombre */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+}
+
+.sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #FCF9F1;
+  border-radius: 24px 24px 0 0;
+  z-index: 11;
+  display: flex;
+  flex-direction: column;
+  transform: translateY(100%);
+  transition: transform 0.35s ease;
+  height: auto;
+  max-height: 80vh;
+  padding-bottom: 40px;
+  z-index: 9999;
+}
+
+/* Visible */
+.sheet.active {
+  transform: translateY(0);
+}
+
+/* Handle */
+.sheet-handle {
+  width: 40px;
+  height: 5px;
+  background: #ccc;
+  border-radius: 10px;
+  margin: 10px auto;
+}
+
+/* Header */
+.sheet-header {
+  padding: 16px;
+}
+
+.sheet-header h2 {
+  
+  margin: 0;
+  font-size: 24px;
+
+  font-family: "Italiana", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+
+}
+
+.sheet-header span {
+  font-weight: 600;
+  float: right;
+}
+
+.sheet-header p {
+  margin-top: 6px;
+  font-size: 14px;
+  opacity: 0.7;
+  font-family: "roboto", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+/* Canvas */
+.sheet-canvas {
+  flex: 1 1 auto;
+  padding: 0 16px;   
+  position: relative;
+}
+
+.sheet-canvas canvas {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #E6E6E6;
+}
+
+/* Bouton AR */
+.ar-btn {
+  margin: 0px 15px;
+  padding: 24px 24px;
+  border-radius: 14px;
+  border: none;
+  background: black;
+  font-family: "roboto", sans-serif;
+  font-weight: 500;
+  color: white;
+  font-size: 16px;
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  box-shadow: inset 0px 0px 17px 8px rgb(255 255 255 / 35%), inset 0 -1px 0 rgba(255, 255, 255, 0.12);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hidden {
+  display: none !important;
+}
+
+
+@media (max-width: 480px) {
+  .sheet-canvas {
+    height: 45vh;
+  }
+    
+  .card {
+
+    height: 140px;
+  }
+}
+
+
+
+/* Icône main */
+.hint-rotate {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  pointer-events: none; /* très important */
+  z-index: 5;
+
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+
+.hint-rotate img {
+  width: 46px;
+  height: 46px;
+  opacity: 1;
+}
+
+/* Fade out */
+.hint-rotate.hidden {
+  opacity: 0;
+}
+
