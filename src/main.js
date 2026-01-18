@@ -35,6 +35,12 @@ const sheetPrice = document.getElementById('sheet-price')
 const viewerLoader = document.getElementById('viewer-loader')
 const overlaySelectBtn = document.getElementById('overlay-select')
 
+const stepCurrent = document.getElementById('step-current')
+const stepTotal = document.getElementById('step-total')
+
+stepTotal.textContent = STEPS.length
+
+
 // ===============================
 // 🎬 INTRO
 // ===============================
@@ -59,6 +65,9 @@ function startStep() {
   const step = STEPS[stepIndex]
   animateTitle(step.label)
 
+  stepCurrent.textContent = stepIndex + 1
+
+
   selectedItem = null
   updateFooter()
 
@@ -79,12 +88,17 @@ window.openOverlay = (item) => {
 
   sheetTitle.textContent = item.title
   sheetDesc.textContent = item.description
-  sheetPrice.textContent = `${item.price}€`
+  sheetPrice.textContent = `${Number(item.price).toFixed(2)}€`
+
 
   viewerLoader.classList.remove('hidden')
 
   overlay.classList.remove('hidden')
+  overlay.classList.add('active')
   sheet.classList.remove('hidden')
+  sheetBackBtn.classList.remove('hidden')
+  
+
 
   requestAnimationFrame(() => {
     sheet.classList.add('active')
@@ -129,12 +143,15 @@ overlaySelectBtn.addEventListener('click', () => {
 // ❌ FERMETURE OVERLAY
 // ===============================
 function closeOverlay() {
-  sheet.classList.remove('active')
-  overlay.classList.add('hidden')
+  overlay.classList.remove('active')
 
+  sheetBackBtn.classList.add('hidden')
+  
   setTimeout(() => {
+    overlay.classList.add('hidden')
     sheet.classList.add('hidden')
   }, 300)
+  
 }
 
 // ===============================

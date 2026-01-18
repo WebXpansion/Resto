@@ -16,12 +16,11 @@ export function renderStep(category) {
         <div class="info">
           <div class="info-titre">
             <h3>${item.title}</h3>
+            <span>${Number(item.price).toFixed(2)}€</span>
+
             <p>${item.description}</p>
           </div>
-          <div class="info-titre-btn">
-            <span>${item.price}€</span>
-            <button class="select-btn" data-id="${item.id}">Voir</button>
-          </div>
+         
         </div>
       `
 
@@ -30,12 +29,7 @@ export function renderStep(category) {
         window.openOverlay(item)
       })
 
-      // clic sur le bouton = même comportement
-      const btn = card.querySelector('.select-btn')
-      btn.addEventListener('click', (e) => {
-        e.stopPropagation() // évite double déclenchement
-        window.openOverlay(item)
-      })
+   
 
 
 

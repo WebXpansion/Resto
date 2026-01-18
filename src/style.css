@@ -13,6 +13,11 @@ body {
     color 0.4s ease;
 }
 
+p{
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+}
+
 h1,
 .filters,
 .filters button,
@@ -274,10 +279,13 @@ body.soir .mode-switch span.active{
 }
 
 .step-header {
-  text-align: center;
-  padding: 40px 20px 40px;
-  background-color: #F8F1DD;
+  text-align: left;
+  padding: 20px 15px 20px;
+  background-color: #E6E0CA;
   font-family: "italiana";
+  display: flex;
+      justify-content: space-between;
+      align-items: center;
 }
 
 #step-prefix,
@@ -296,17 +304,22 @@ body.soir .mode-switch span.active{
 
 #step-prefix {
   font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 200;
 }
 
 #step-title {
-  font-size: 42px;
+  font-size: 16px;
+  font-family: "Open Sans", sans-serif;
+    font-weight: 500;
 }
 
 .step-footer {
   display: flex;
   justify-content: space-between;
   gap: 6px;
-  background-color: #F8F1DD;
+  background-color: #e6e0ca;
+  border-top: 1px solid #0000001c;
   padding: 10px 15px;
   position: fixed;
   bottom: 0;
@@ -318,7 +331,7 @@ body.soir .mode-switch span.active{
 button#skip {
   width: 50%;
   padding: 12px;
-  border: 1px solid #DDD6C5;
+  border: 1px solid #cac5b1;
   border-radius: 8px;
 }
 
@@ -365,4 +378,24 @@ span.logo-site {
 ;
   justify-content: center;
   transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.step-header-left {
+  display: flex;
+  flex-direction: row;
+  gap: 6px;
+}
+
+.step-counter {
+  font-family: "Roboto", sans-serif;
+  font-size: 14px;
+  opacity: 0.6;
+  white-space: nowrap;
+}
+
+.main-sheet-back {
+  position: absolute;
+  right: 0;
+  padding-right: 15px;
+  margin-top: -20px;
 }

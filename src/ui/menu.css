@@ -4,7 +4,7 @@
 body {
   overflow-x: hidden;
   margin: 0;
-  background-color: #FCF9F1;
+  background-color: #F4F4E8;
 }
 
 
@@ -83,10 +83,8 @@ button{
 
 .card {
   display: flex;
-  gap: 16px;
-
-  background: #FCF9F1;
-  border: 1px solid #E6E0D4;
+  gap: 8px;
+  border: 1px solid #dbdbd0;
   border-radius: 12px;
 
   height: auto;
@@ -99,7 +97,7 @@ button{
 
 /* Image à gauche */
 .card img {
-  width: 110px;
+  width: 130px;
   object-fit: cover;
   height: 100%;
   flex-shrink: 0;
@@ -128,25 +126,27 @@ button{
 /* Description */
 .card .info p {
   display: block;
-  font-size: 14px;
+  font-size: 12px;
   line-height: 1.4;
-  opacity: 0.7;
+  color: #6b6b65;
+  padding-top: 3px;
 }
 
 /* Prix */
 .card .info span {
-  font-size: 18px;
-  font-weight: 500;
-
+  font-size: 13px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+    padding-top: 2px;
 }
 
 /* Bouton Choisir */
 .select-btn {
   align-self: flex-end;
 
-  font-family: "Roboto", sans-serif;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
   font-size: 14px;
-  font-weight: 500;
 
   background: none;
   border: none;
@@ -170,28 +170,34 @@ button{
 .card.selected .select-btn {
   text-decoration: underline;
   font-weight: 600;
+  background: none;
 }
 
 
   /* Header top sheet */
 .sheet-top {
   padding: 12px 16px 0;
+  text-align: right;
 }
 
 /* Bouton retour */
 .sheet-back {
-  padding: 8px 12px;
-  border: 1px solid #000;
+  border: 1px solid #0000001f;
   border-radius: 10px;
-  background: transparent;
-  color: #000;
+  color: #000000ad;
   font-size: 14px;
-
   appearance: none;
   -webkit-appearance: none;
-
   user-select: none;
   -webkit-user-select: none;
+  background-color: #F4F4E8;
+  width: 40px;
+  height: 40px;
+}
+
+.sheet-back img{
+ width: 16px;
+ height: 16px;
 }
 
 /* Feedback tap iOS */
@@ -214,15 +220,14 @@ button{
   .info-titre {
     display: flex;
     flex-direction: column;
-    gap: 6px;
     width: 100%;
     justify-content: space-between;
 }
 
 .info-titre h3{
-  font-family: "italiana";
-  font-size: 16px;
-  font-weight: 900;
+  font-size: 15px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
 }
 
 
@@ -269,32 +274,33 @@ button{
 
 /* Header */
 .sheet-header {
-  padding: 16px;
+  padding: 20px 15px 15px 15px;
 }
 
 .sheet-header h2 {
   
   margin: 0;
-  font-size: 24px;
-
-  font-family: "Italiana", sans-serif;
-  font-weight: 800;
-  font-style: normal;
+  font-size: 22px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
 
 }
 
 .sheet-header span {
-  font-weight: 600;
   float: right;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+  font-size: 14px;
 }
 
 .sheet-header p {
-  margin-top: 6px;
-  font-size: 14px;
-  opacity: 0.7;
-  font-family: "roboto", sans-serif;
-  font-weight: 200;
+  margin-top: 4px;
+  opacity: 1;
   font-style: normal;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 300;
+  font-size: 14px;
+  color: #6b6b65;
 }
 
 /* Canvas */
@@ -342,7 +348,7 @@ button{
     
   .card {
 
-    height: 140px;
+    height: 110px;
   }
 }
 

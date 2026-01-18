@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Pacifico&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -28,10 +29,16 @@
 
   <!-- STEP TITLE -->
   <div class="step-header">
-    <span class="logo-site">Michelet</span>
-    <span id="step-prefix">Choisissez une</span>
-    <h1 id="step-title">Boisson</h1>
+    <div class="step-header-left">
+      <span id="step-prefix">Choisissez une</span>
+      <h1 id="step-title">Boisson</h1>
+    </div>
+  
+    <div class="step-counter">
+      <span id="step-current">1</span>/<span id="step-total">4</span>
+    </div>
   </div>
+  
 
   <!-- GRID -->
   <div id="menu-grid" class="grid"></div>
@@ -47,11 +54,15 @@
 <!-- BOTTOM SHEET -->
 <div id="sheet" class="sheet hidden">
 
-  <div class="sheet-handle"></div>
 
-  <div class="sheet-top">
-    <button id="sheet-back" class="sheet-back">Retour</button>
-  </div>
+ <!-- BOUTON RETOUR OVERLAY -->
+  <div class="main-sheet-back">
+  <button id="sheet-back" class="sheet-back hidden" aria-label="Retour">
+    <img src="/images/close.svg" alt="" />
+  </button>
+</div>
+
+
 
   <div class="sheet-header">
     <h2 id="sheet-title"></h2>
