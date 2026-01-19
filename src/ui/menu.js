@@ -5,6 +5,8 @@ const grid = document.getElementById('menu-grid')
 export function renderStep(category) {
   grid.innerHTML = ''
 
+  const currentSelection = window.getCurrentSelection()
+
   // ===============================
   // CARTE "PAS DE ..."
   // ===============================
@@ -29,13 +31,19 @@ export function renderStep(category) {
     </div>
   `
 
+  // 🔁 RESTAURATION VISUELLE pour "pas de ..."
+  if (currentSelection === null) {
+    noneCard.classList.add('selected')
+  }
+  
+  
+
   noneCard.addEventListener('click', () => {
     document.querySelectorAll('.card').forEach(c =>
       c.classList.remove('selected')
     )
 
     noneCard.classList.add('selected')
-
     window.setSelectedItem(null)
   })
 
@@ -61,7 +69,11 @@ export function renderStep(category) {
         </div>
       `
 
-      // 👉 clic carte = ouvrir overlay uniquement
+      // 🔁 RESTAURATION VISUELLE produit sélectionné
+      if (currentSelection?.id === item.id) {
+        card.classList.add('selected')
+      }
+
       card.addEventListener('click', () => {
         window.openOverlay(item)
       })

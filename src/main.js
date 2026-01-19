@@ -9,13 +9,31 @@ import { initViewer } from './viewer.js'
 const STEPS = [
   { key: 'drink', label: 'Boisson' },
   { key: 'starter', label: 'Starter' },
-  { key: 'pizza', label: 'Plat' }
+  { key: 'pizza', label: 'Plat' },
+  { key: 'dessert', label: 'Dessert' },
+  { key: 'recap', label: 'Récapitulatif' }
 ]
+
+
 
 let stepIndex = 0
 let selectedItem = null
 let previewItem = null
 let hasSelection = false
+
+const selections = {
+  drink: undefined,
+  starter: undefined,
+  pizza: undefined,
+  dessert: undefined
+}
+
+window.getCurrentSelection = () => {
+  const stepKey = STEPS[stepIndex].key
+  return selections[stepKey]
+}
+
+
 
 // ===============================
 // 🎯 ELEMENTS UI
@@ -69,28 +87,51 @@ function startStep() {
 
   const stepFooter = document.querySelector('.step-footer')
 
-if (stepIndex === 0) {
-  stepFooter.classList.add('single')
-} else {
-  stepFooter.classList.remove('single')
-}
-
+  // Étape 1 → bouton Continuer plein width
+  if (stepIndex === 0) {
+    stepFooter.classList.add('single')
+  } else {
+    stepFooter.classList.remove('single')
+  }
 
   stepCurrent.textContent = stepIndex + 1
 
-  // bouton retour visible à partir de l’étape 2
+  // Bouton retour visible à partir de l’étape 2
   if (stepIndex > 0) {
     stepBackBtn.classList.remove('hidden')
   } else {
     stepBackBtn.classList.add('hidden')
   }
 
-  selectedItem = null
-  hasSelection = false
-  updateFooter()
+  
 
+  // ===============================
+  // 🧾 ÉTAPE RÉCAP
+  // ===============================
+  if (step.key === 'recap') {
+    renderRecap()
+
+    // Footer spécial récap
+    nextBtn.textContent = 'Valider'
+    nextBtn.disabled = false
+
+    return
+  }
+
+  // ===============================
+  // 🧭 ÉTAPES NORMALES
+  // ===============================
+  const stepKey = STEPS[stepIndex].key
+
+  // 🔁 restaurer sélection si elle existe
+  selectedItem = selections[stepKey]
+  hasSelection = selections[stepKey] !== undefined
+  
+  updateFooter()
   renderStep(step.key)
+  
 }
+
 
 sheetBackBtn.addEventListener('click', () => {
   previewItem = null
@@ -134,6 +175,14 @@ window.openOverlay = (item) => {
   })
 }
 
+overlay.addEventListener('click', (e) => {
+  // si on clique directement sur le fond
+  if (e.target === overlay) {
+    closeOverlay()
+  }
+})
+
+
 // ===============================
 // ✅ VALIDATION DEPUIS OVERLAY
 // ===============================
@@ -155,8 +204,12 @@ overlaySelectBtn.addEventListener('click', () => {
   })
 
   selectedItem = previewItem
+  const stepKey = STEPS[stepIndex].key
+selections[stepKey] = selectedItem
+
   previewItem = null
   hasSelection = true
+  
 
   closeOverlay()
   updateFooter()
@@ -180,10 +233,16 @@ function closeOverlay() {
 
 
 window.setSelectedItem = (item) => {
-  selectedItem = item 
+  selectedItem = item
   hasSelection = true
+
+  const stepKey = STEPS[stepIndex].key
+  selections[stepKey] = item 
+
   updateFooter()
 }
+
+
 
 
 // ===============================
@@ -276,5 +335,47 @@ function openQuickLook(modelName) {
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
+}
+
+
+function renderRecap() {
+  const grid = document.getElementById('menu-grid')
+  grid.innerHTML = ''
+
+  Object.entries(selections).forEach(([category, item]) => {
+    const card = document.createElement('div')
+    card.className = 'card recap-card'
+
+    if (item) {
+      card.innerHTML = `
+        <img src="${item.image}" alt="${item.title}">
+        <div class="info">
+          <span class="recap-category">${categoryLabel(category)}</span>
+          <h3>${item.title}</h3>
+          <span>${Number(item.price).toFixed(2)}€</span>
+        </div>
+      `
+    } else {
+      card.innerHTML = `
+        <img src="/images/placeholder.webp" alt="Aucun ${categoryLabel(category)}">
+        <div class="info">
+          <span class="recap-category">${categoryLabel(category)}</span>
+          <h3>Aucun ${categoryLabel(category).toLowerCase()} sélectionné</h3>
+        </div>
+      `
+    }
+
+    grid.appendChild(card)
+  })
+}
+
+function categoryLabel(key) {
+  switch (key) {
+    case 'drink': return 'Boisson'
+    case 'starter': return 'Starter'
+    case 'pizza': return 'Plat'
+    case 'dessert': return 'Dessert'
+    default: return ''
+  }
 }
 

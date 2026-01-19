@@ -11,7 +11,7 @@ export const MENU = [
     },
     {
       id: 'tartare-saumon',
-      category: 'drink',
+      category: 'starter',
       title: 'Tartare de saumon',
       description: 'Saumon frais et avocat',
       price: 14.00,
@@ -31,8 +31,8 @@ export const MENU = [
     },
     {
       id: 'panna_cotta_Nutella',
-      category: 'drink',
-      title: 'Panna Cotta alla Nutella',
+      category: 'dessert',
+      title: 'Panna Cotta au Nutella',
       description: 'Crème cuite Italienne à la Nutella',
       price: 8.00,
       image: '/images/panna-nutella.webp',
@@ -41,8 +41,8 @@ export const MENU = [
     },
     {
       id: 'Tiramisù-al-Pistacchio',
-      category: 'drink',
-      title: 'Tiramisù al Pistacchio',
+      category: 'dessert',
+      title: 'Tiramisù au Pistache',
       description: 'Crème au mascarpone et pistache',
       price: 9.00,
       image: '/images/tiramisu-pistache.webp',

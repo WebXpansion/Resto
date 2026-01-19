@@ -116,7 +116,7 @@ button{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 22px;
+  gap: 2px;
   width: 100%;
 }
 
@@ -166,7 +166,7 @@ button{
 ========================= */
 
 .card.selected {
-  background: #F8F1DD;
+  background: #E6E0CA;
   border-color: #D8D1B8;
 }
 
@@ -384,3 +384,10 @@ button{
   opacity: 0;
 }
 
+
+
+.info h3{
+  font-size: 14px;
+  font-family: "Open Sans", sans-serif;
+  font-weight: 400;
+}
