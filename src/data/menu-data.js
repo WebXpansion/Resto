@@ -1,7 +1,17 @@
 export const MENU = [
     {
-      id: 'pizza-mozza',
+      id: 'Vin',
       category: 'drink',
+      title: 'Monsieur Soleil',
+      description: 'Rouge',
+      price: 18.50,
+      image: '/images/vin.webp',
+      model: 'wine-1.glb',
+      scale: 18
+    },
+    {
+      id: 'pizza-mozza',
+      category: 'pizza',
       title: 'La Mozzarella',
       description: 'Base tomate / Mozzarella',
       price: 14.00,
@@ -21,7 +31,7 @@ export const MENU = [
     },
     {
       id: 'Linguine-ai-frutti-di-mare',
-      category: 'drink',
+      category: 'pizza',
       title: 'Linguine ai frutti di mare',
       description: 'Pâtes aux fruits de mer',
       price: 24.00,
