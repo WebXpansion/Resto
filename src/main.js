@@ -40,7 +40,7 @@ window.getCurrentSelection = () => {
 // ===============================
 const sheetBackBtn = document.getElementById('sheet-back')
 
-const stepPrefix = document.getElementById('step-prefix')
+
 const stepTitle = document.getElementById('step-title')
 
 
@@ -249,14 +249,14 @@ window.setSelectedItem = (item) => {
 // 🎬 TITRE ANIMÉ
 // ===============================
 function animateTitle(label) {
-  stepPrefix.classList.remove('visible')
   stepTitle.classList.remove('visible')
-
   stepTitle.textContent = label
 
-  setTimeout(() => stepPrefix.classList.add('visible'), 100)
-  setTimeout(() => stepTitle.classList.add('visible'), 700)
+  requestAnimationFrame(() => {
+    stepTitle.classList.add('visible')
+  })
 }
+
 
 // ===============================
 // 🦶 FOOTER
