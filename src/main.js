@@ -188,13 +188,15 @@ window.openOverlay = (item) => {
   viewerLoader.classList.remove('hidden')
 
   overlay.classList.remove('hidden')
-  overlay.classList.add('active')
   sheet.classList.remove('hidden')
   sheetBackBtn.classList.remove('hidden')
-
+  
   requestAnimationFrame(() => {
+    overlay.classList.add('active')
     sheet.classList.add('active')
   })
+  
+  
 
   const loaderText = viewerLoader.querySelector('span')
 
@@ -271,15 +273,16 @@ document.getElementById('overlay-confirm').addEventListener('click', () => {
 // ===============================
 function closeOverlay() {
   overlay.classList.remove('active')
+  sheet.classList.remove('active') 
 
   sheetBackBtn.classList.add('hidden')
-  
+
   setTimeout(() => {
     overlay.classList.add('hidden')
     sheet.classList.add('hidden')
   }, 300)
-  
 }
+
 
 
 
