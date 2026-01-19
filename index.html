@@ -73,8 +73,9 @@
 
   <div class="sheet-canvas">
     <div id="viewer-loader" class="viewer-loader">
-      <span>Chargement…</span>
+      <span id="viewer-loader-text">Chargement…</span>
     </div>
+    
 
     <canvas id="canvas"></canvas>
   </div>
@@ -89,9 +90,18 @@
     
 
     <!-- BOUTON DE VALIDATION -->
-    <button id="overlay-select" class="btn-select">
-      Sélectionnez ce plat
-    </button>
+    <div class="main-quantity-selector">
+      <div class="quantity-selector">
+        <button id="qty-minus">−</button>
+        <span id="qty-value">1</span>
+        <button id="qty-plus">+</button>
+      </div>
+      
+      <button id="overlay-confirm" class="btn-select">
+        Ajouter
+      </button>
+    </div>
+    
   </div>
 
 

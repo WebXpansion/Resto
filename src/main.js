@@ -17,21 +17,41 @@ const STEPS = [
 
 
 let stepIndex = 0
-let selectedItem = null
 let previewItem = null
-let hasSelection = false
+let currentQty = 1
+
+const qtyValue = document.getElementById('qty-value')
+const qtyPlus = document.getElementById('qty-plus')
+const qtyMinus = document.getElementById('qty-minus')
+const arBtn = document.getElementById('ar')
+
+qtyPlus.addEventListener('click', () => {
+  currentQty++
+  qtyValue.textContent = currentQty
+})
+
+qtyMinus.addEventListener('click', () => {
+  if (currentQty > 1) {
+    currentQty--
+    qtyValue.textContent = currentQty
+  }
+})
+
+
 
 const selections = {
-  drink: undefined,
-  starter: undefined,
-  pizza: undefined,
-  dessert: undefined
+  drink: [],
+  starter: [],
+  pizza: [],
+  dessert: []
 }
+
 
 window.getCurrentSelection = () => {
   const stepKey = STEPS[stepIndex].key
   return selections[stepKey]
 }
+
 
 
 
@@ -121,12 +141,8 @@ function startStep() {
   // ===============================
   // 🧭 ÉTAPES NORMALES
   // ===============================
-  const stepKey = STEPS[stepIndex].key
 
-  // 🔁 restaurer sélection si elle existe
-  selectedItem = selections[stepKey]
-  hasSelection = selections[stepKey] !== undefined
-  
+
   updateFooter()
   renderStep(step.key)
   
@@ -151,11 +167,23 @@ stepBackBtn.addEventListener('click', () => {
 // ===============================
 window.openOverlay = (item) => {
   previewItem = item
+  if (!item.model) {
+    arBtn.style.display = 'none'
+  } else {
+    arBtn.style.display = 'flex'
+  }
 
+  const stepKey = STEPS[stepIndex].key
+  const list = selections[stepKey]
+
+  const existing = list.find(e => e.item.id === item.id)
+
+  // ✅ RESTAURATION DE LA QTÉ
+  currentQty = existing ? existing.quantity : 1
+  qtyValue.textContent = currentQty
   sheetTitle.textContent = item.title
   sheetDesc.textContent = item.description
   sheetPrice.textContent = `${Number(item.price).toFixed(2)}€`
-
 
   viewerLoader.classList.remove('hidden')
 
@@ -163,17 +191,42 @@ window.openOverlay = (item) => {
   overlay.classList.add('active')
   sheet.classList.remove('hidden')
   sheetBackBtn.classList.remove('hidden')
-  
-
 
   requestAnimationFrame(() => {
     sheet.classList.add('active')
   })
 
-  initViewer(item, () => {
-    viewerLoader.classList.add('hidden')
-  })
+  const loaderText = viewerLoader.querySelector('span')
+
+  const canvas = document.getElementById('canvas')
+  
+  // Toujours montrer le loader au départ
+  viewerLoader.classList.remove('hidden')
+  
+  if (!item.model) {
+    // ❌ Pas de 3D
+    loaderText.textContent = 'Aucune 3D disponible'
+  
+    // On masque le canvas
+    if (canvas) canvas.style.display = 'none'
+  
+  } else {
+    // ✅ 3D disponible
+    loaderText.textContent = 'Chargement…'
+  
+    if (canvas) canvas.style.display = 'block'
+  
+    initViewer(item, () => {
+      viewerLoader.classList.add('hidden')
+    })
+  }
+  
 }
+
+
+  
+
+
 
 overlay.addEventListener('click', (e) => {
   // si on clique directement sur le fond
@@ -186,34 +239,31 @@ overlay.addEventListener('click', (e) => {
 // ===============================
 // ✅ VALIDATION DEPUIS OVERLAY
 // ===============================
-overlaySelectBtn.addEventListener('click', () => {
+document.getElementById('overlay-confirm').addEventListener('click', () => {
   if (!previewItem) return
 
-  // reset toutes les cartes
-  document.querySelectorAll('.card').forEach(card =>
-    card.classList.remove('selected')
-  )
-
-  // retrouver la carte correspondante
-  const cards = document.querySelectorAll('.card')
-  cards.forEach(card => {
-    const title = card.querySelector('h3')
-    if (title && title.textContent === previewItem.title) {
-      card.classList.add('selected')
-    }
-  })
-
-  selectedItem = previewItem
   const stepKey = STEPS[stepIndex].key
-selections[stepKey] = selectedItem
+  const list = selections[stepKey]
+
+  const existing = list.find(e => e.item.id === previewItem.id)
+
+  if (existing) {
+    existing.quantity += currentQty
+  } else {
+    list.push({
+      item: previewItem,
+      quantity: currentQty
+    })
+  }
+
 
   previewItem = null
-  hasSelection = true
-  
 
   closeOverlay()
+  renderStep(STEPS[stepIndex].key)
   updateFooter()
 })
+
 
 
 // ===============================
@@ -232,15 +282,7 @@ function closeOverlay() {
 }
 
 
-window.setSelectedItem = (item) => {
-  selectedItem = item
-  hasSelection = true
 
-  const stepKey = STEPS[stepIndex].key
-  selections[stepKey] = item 
-
-  updateFooter()
-}
 
 
 
@@ -262,14 +304,12 @@ function animateTitle(label) {
 // 🦶 FOOTER
 // ===============================
 function updateFooter() {
-  if (hasSelection) {
-    nextBtn.disabled = false
-    nextBtn.textContent = 'Continuer'
-  } else {
-    nextBtn.disabled = true
-    nextBtn.textContent = 'Faites un choix'
-  }
+  nextBtn.disabled = false
+  nextBtn.textContent = 'Continuer'
 }
+
+
+
 
 
 
@@ -277,9 +317,10 @@ function updateFooter() {
 // 👉 NAVIGATION
 // ===============================
 nextBtn.addEventListener('click', () => {
-  if (!hasSelection) return
   goNext()
 })
+
+
 
 
 
@@ -298,7 +339,10 @@ function goNext() {
 // ===============================
 // 📱 AR BUTTON
 // ===============================
-const arBtn = document.getElementById('ar')
+
+
+
+
 
 function isAppleDevice() {
   const ua = navigator.userAgent
@@ -309,13 +353,13 @@ function isAppleDevice() {
 }
 
 arBtn.addEventListener('click', () => {
-  if (!previewItem) return
+  if (!previewItem || !previewItem.model) return
 
-  // 🍎 Apple → Quick Look
   if (isAppleDevice()) {
     openQuickLook(previewItem.model)
   }
 })
+
 
 // ===============================
 // 🍎 QUICK LOOK (USDZ)
@@ -342,32 +386,35 @@ function renderRecap() {
   const grid = document.getElementById('menu-grid')
   grid.innerHTML = ''
 
-  Object.entries(selections).forEach(([category, item]) => {
-    const card = document.createElement('div')
-    card.className = 'card recap-card'
+  Object.entries(selections).forEach(([category, list]) => {
+    if (list.length === 0) return
 
-    if (item) {
+    list.forEach(({ item, quantity }) => {
+      const card = document.createElement('div')
+      card.className = 'card recap-card'
+
       card.innerHTML = `
         <img src="${item.image}" alt="${item.title}">
         <div class="info">
-          <span class="recap-category">${categoryLabel(category)}</span>
-          <h3>${item.title}</h3>
-          <span>${Number(item.price).toFixed(2)}€</span>
-        </div>
-      `
-    } else {
-      card.innerHTML = `
-        <img src="/images/placeholder.webp" alt="Aucun ${categoryLabel(category)}">
-        <div class="info">
-          <span class="recap-category">${categoryLabel(category)}</span>
-          <h3>Aucun ${categoryLabel(category).toLowerCase()} sélectionné</h3>
-        </div>
-      `
-    }
+          <div class="info-titre">
+            <h3>${item.title}</h3>
 
-    grid.appendChild(card)
+            <div class="price-row">
+              <span class="price">${Number(item.price).toFixed(2)}€</span>
+              <span class="separator">|</span>
+              <span class="qty">Qté : ${quantity}</span>
+            </div>
+
+            <p>${item.description}</p>
+          </div>
+        </div>
+      `
+
+      grid.appendChild(card)
+    })
   })
 }
+
 
 function categoryLabel(key) {
   switch (key) {

@@ -10,8 +10,18 @@ export const MENU = [
       scale: 18
     },
     {
+      id: 'ice-tea',
+      category: 'drink',
+      title: 'Ice Tea',
+      description: '',
+      price: 4.50,
+      image: '/images/ice-tea.webp',
+      model: null,
+      scale: 18
+    },
+    {
       id: 'pizza-mozza',
-      category: 'pizza',
+      category: 'starter',
       title: 'La Mozzarella',
       description: 'Base tomate / Mozzarella',
       price: 14.00,

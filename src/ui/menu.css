@@ -4,7 +4,7 @@
 body {
   overflow-x: hidden;
   margin: 0;
-  background-color: #F4F4E8;
+  background-color: #FCF4E6;
 }
 
 
@@ -58,9 +58,8 @@ button{
   .grid {
     display: grid;
     gap: 6px;
-    padding: 12px 12px 80px 12px;
-  
     grid-template-columns: repeat(1, minmax(0, 1fr));
+    padding-bottom: 90px;
   }
   
   
@@ -88,21 +87,24 @@ button{
 .card {
   display: flex;
   gap: 8px;
-  border: 1px solid #dbdbd0;
-  border-radius: 12px;
-
   height: auto;
-
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease;
     overflow: hidden;
+    padding:12px;
 }
+
+.card-row:not(:last-child) {
+  border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
+}
+
+
 
 /* Image à gauche */
 .card img {
   width: 130px;
-  object-fit: cover;
+  object-fit: contain;
   height: 100%;
   flex-shrink: 0;
 }
@@ -112,7 +114,6 @@ button{
   position: static;
   padding: 0;
   color: #000;
-  padding: 12px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -165,17 +166,9 @@ button{
    CARTE SÉLECTIONNÉE
 ========================= */
 
-.card.selected {
-  background: #E6E0CA;
-  border-color: #D8D1B8;
-}
 
-/* Bouton sélectionné */
-.card.selected .select-btn {
-  text-decoration: underline;
-  font-weight: 600;
-  background: none;
-}
+
+
 
 
   /* Header top sheet */
@@ -194,7 +187,7 @@ button{
   -webkit-appearance: none;
   user-select: none;
   -webkit-user-select: none;
-  background-color: #F4F4E8;
+  background-color: #FCF4E6;
   width: 40px;
   height: 40px;
 }
@@ -249,7 +242,7 @@ button{
   bottom: 0;
   left: 0;
   right: 0;
-  background: #FCF9F1;
+  background: #FCF4E6;
   border-radius: 24px 24px 0 0;
   z-index: 11;
   display: flex;
@@ -324,7 +317,6 @@ button{
 
 /* Bouton AR */
 .ar-btn {
-  margin: 0px 15px;
   padding: 24px 24px;
   border-radius: 14px;
   border: none;
@@ -391,3 +383,5 @@ button{
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
 }
+
+
