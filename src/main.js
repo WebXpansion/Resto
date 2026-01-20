@@ -78,7 +78,8 @@ const stepCurrent = document.getElementById('step-current')
 const stepTotal = document.getElementById('step-total')
 const stepBackBtn = document.getElementById('step-back')
 
-stepTotal.textContent = STEPS.length
+const STEPS_WITHOUT_RECAP = STEPS.filter(step => step.key !== 'recap')
+stepTotal.textContent = STEPS_WITHOUT_RECAP.length
 
 
 // ===============================
@@ -103,50 +104,72 @@ window.addEventListener('load', () => {
 // ===============================
 function startStep() {
   const step = STEPS[stepIndex]
-  animateTitle(step.label)
+  const isRecap = step.key === 'recap'
 
   const stepFooter = document.querySelector('.step-footer')
+  const stepHeader = document.querySelector('.step-header')
 
-  // Étape 1 → bouton Continuer plein width
-  if (stepIndex === 0) {
+  // ===============================
+  // 🎯 HEADER
+  // ===============================
+  if (isRecap) {
+    stepHeader.classList.add('recap')
+    stepTitle.textContent = 'Votre récap'
+  } else {
+    stepHeader.classList.remove('recap')
+    animateTitle(step.label)
+  }
+
+  // ===============================
+  // 🦶 FOOTER
+  // ===============================
+  if (isRecap) {
+    nextBtn.style.display = 'none'
     stepFooter.classList.add('single')
   } else {
+    nextBtn.style.display = 'flex'
     stepFooter.classList.remove('single')
   }
 
-  stepCurrent.textContent = stepIndex + 1
+  // Étape 1 → bouton plein width
+  if (stepIndex === 0 && !isRecap) {
+    stepFooter.classList.add('single')
+  }
 
-  // Bouton retour visible à partir de l’étape 2
+  // ===============================
+  // 🔢 COMPTEUR (SANS RÉCAP)
+  // ===============================
+  if (!isRecap) {
+    const currentStep = STEPS_WITHOUT_RECAP.findIndex(
+      s => s.key === step.key
+    )
+    stepCurrent.textContent = currentStep + 1
+  }
+
+  // ===============================
+  // ⬅️ BOUTON RETOUR
+  // ===============================
   if (stepIndex > 0) {
     stepBackBtn.classList.remove('hidden')
   } else {
     stepBackBtn.classList.add('hidden')
   }
 
-  
-
   // ===============================
   // 🧾 ÉTAPE RÉCAP
   // ===============================
-  if (step.key === 'recap') {
+  if (isRecap) {
     renderRecap()
-
-    // Footer spécial récap
-    nextBtn.textContent = 'Valider'
-    nextBtn.disabled = false
-
     return
   }
 
   // ===============================
   // 🧭 ÉTAPES NORMALES
   // ===============================
-
-
   updateFooter()
   renderStep(step.key)
-  
 }
+
 
 
 sheetBackBtn.addEventListener('click', () => {
@@ -314,9 +337,22 @@ function animateTitle(label) {
 // 🦶 FOOTER
 // ===============================
 function updateFooter() {
+  const isBeforeRecap = stepIndex === STEPS.length - 2
+
   nextBtn.disabled = false
-  nextBtn.textContent = 'Continuer'
+
+  if (isBeforeRecap) {
+    nextBtn.innerHTML = `
+      <span>Valider</span>
+      <svg class="icon-check" width="16" height="16" viewBox="0 0 24 24">
+        <path d="M20 6L9 17l-5-5" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    `
+  } else {
+    nextBtn.textContent = 'Continuer'
+  }
 }
+
 
 
 
@@ -420,7 +456,7 @@ function renderRecap() {
               <span class="qty">Qté : ${quantity}</span>
             </div>
             <button class="btn-replace" data-category="${item.category}">
-              Remplacer
+              Modifier
             </button>
 
 

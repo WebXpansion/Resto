@@ -337,7 +337,7 @@ button#skip {
 }
 
 button#next {
-  width: 50%;
+  width: 100%;
   padding: 20px 0;
   border-radius: 999px;
   color: white;
@@ -359,6 +359,18 @@ span.logo-site {
   opacity: 0.5;
   pointer-events: none;
 }
+
+#next {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+#next .icon-check {
+  display: block;
+}
+
 
 .btn-overlay {
   display: flex;
@@ -425,7 +437,7 @@ span.logo-site {
 
 
 button#step-back{
-  width: 50%;
+  width: 100%;
   padding: 20px 0;
   border-radius: 999px;
   color: black;
@@ -441,6 +453,11 @@ button#step-back{
   padding: 20px;
   border-radius: 999px;
 }
+
+.step-footer.single #step-back {
+  width: 100%;
+}
+
 
 
 .card .none-content img{
@@ -529,4 +546,28 @@ button.btn-replace {
   border: 1px solid #00000014;
   font-family: "Open Sans", sans-serif;
   font-weight: 400;
+}
+
+
+/* ===============================
+   🧾 HEADER RÉCAP
+=============================== */
+
+.step-header.recap {
+  justify-content: left;
+  background: transparent;
+  padding: 24px 15px;
+}
+
+.step-counter {
+  display: none;
+}
+
+.step-header.recap #step-title {
+  font-family: "Italiana", serif;
+  font-size: 28px;
+  font-weight: 800;
+  opacity: 1;
+  filter: none;
+  text-align: center;
 }
