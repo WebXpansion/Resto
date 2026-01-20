@@ -31,11 +31,12 @@ qtyPlus.addEventListener('click', () => {
 })
 
 qtyMinus.addEventListener('click', () => {
-  if (currentQty > 1) {
+  if (currentQty > 0) {
     currentQty--
     qtyValue.textContent = currentQty
   }
 })
+
 
 
 
@@ -290,13 +291,24 @@ document.getElementById('overlay-confirm').addEventListener('click', () => {
   const existing = list.find(e => e.item.id === previewItem.id)
 
   if (existing) {
-    existing.quantity = currentQty
+    if (currentQty === 0) {
+      // ❌ Supprimer le produit
+      const index = list.findIndex(e => e.item.id === previewItem.id)
+      if (index !== -1) list.splice(index, 1)
+    } else {
+      // ✅ Mettre à jour la quantité
+      existing.quantity = currentQty
+    }
   } else {
-    list.push({
-      item: previewItem,
-      quantity: currentQty
-    })
+    if (currentQty > 0) {
+      // ✅ Ajouter seulement si > 0
+      list.push({
+        item: previewItem,
+        quantity: currentQty
+      })
+    }
   }
+  
 
   previewItem = null
   closeOverlay()
@@ -448,6 +460,19 @@ function openQuickLook(modelName) {
 function renderRecap() {
   const grid = document.getElementById('menu-grid')
   grid.innerHTML = ''
+
+  const hasAnySelection = Object.values(selections)
+    .some(list => list.length > 0)
+
+  // ❌ Aucun produit sélectionné
+  if (!hasAnySelection) {
+    const empty = document.createElement('div')
+    empty.className = 'recap-empty'
+    empty.textContent = 'Aucune sélection pour le moment'
+
+    grid.appendChild(empty)
+    return
+  }
 
   Object.entries(selections).forEach(([category, list]) => {
     if (list.length === 0) return
