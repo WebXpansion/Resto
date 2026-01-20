@@ -173,8 +173,9 @@ window.openOverlay = (item) => {
     arBtn.style.display = 'flex'
   }
 
-  const stepKey = STEPS[stepIndex].key
+  const stepKey = item.category
   const list = selections[stepKey]
+  
 
   const existing = list.find(e => e.item.id === item.id)
 
@@ -244,13 +245,13 @@ overlay.addEventListener('click', (e) => {
 document.getElementById('overlay-confirm').addEventListener('click', () => {
   if (!previewItem) return
 
-  const stepKey = STEPS[stepIndex].key
+  const stepKey = previewItem.category
   const list = selections[stepKey]
 
   const existing = list.find(e => e.item.id === previewItem.id)
 
   if (existing) {
-    existing.quantity += currentQty
+    existing.quantity = currentQty
   } else {
     list.push({
       item: previewItem,
@@ -396,6 +397,11 @@ function renderRecap() {
       const card = document.createElement('div')
       card.className = 'card recap-card'
 
+      // ✅ clic → réouverture overlay
+      card.addEventListener('click', () => {
+        window.openOverlay(item)
+      })
+
       card.innerHTML = `
         <img src="${item.image}" alt="${item.title}">
         <div class="info">
@@ -413,10 +419,15 @@ function renderRecap() {
         </div>
       `
 
-      grid.appendChild(card)
+      const wrapper = document.createElement('div')
+      wrapper.className = 'card-row'
+      wrapper.appendChild(card)
+
+      grid.appendChild(wrapper)
     })
   })
 }
+
 
 
 function categoryLabel(key) {

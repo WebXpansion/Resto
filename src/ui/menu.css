@@ -247,12 +247,12 @@ button{
   z-index: 11;
   display: flex;
   flex-direction: column;
-  transform: translateY(100%);
-  transition: transform 0.35s ease;
   height: auto;
   max-height: 80vh;
   padding-bottom: 40px;
   z-index: 9999;
+  transform: translateY(100%);
+  transition: transform 0.35s ease;
 }
 
 /* Visible */

@@ -7,6 +7,12 @@ button {
   font: inherit;
 }
 
+/* Empêche le zoom double-tap iOS */
+html, body {
+  touch-action: manipulation;
+}
+
+
 body {
   transition:
     background-color 0.4s ease,
