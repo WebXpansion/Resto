@@ -308,7 +308,7 @@ body.soir .mode-switch span.active{
 }
 
 #step-title {
-  font-size: 16px;
+  font-size: 18px;
   font-family: "Open Sans", sans-serif;
     font-weight: 500;
 }
@@ -412,7 +412,7 @@ span.logo-site {
   position: absolute;
   right: 0;
   padding-right: 15px;
-  margin-top: -20px;
+  margin-top: -28px;
 }
 
 
