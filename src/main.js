@@ -373,3 +373,43 @@ function renderRecap() {
     })
   })
 }
+
+
+const langSwitch = document.querySelector('.lang-switch')
+const langDropdown = document.querySelector('.lang-dropdown')
+const langLabel = document.querySelector('.lang-label')
+
+function setLanguage(lang) {
+  const domain = location.hostname
+  document.cookie = `googtrans=/fr/${lang}; path=/; domain=${domain}`
+  document.cookie = `googtrans=/fr/${lang}; path=/`
+  location.reload()
+}
+
+if (langSwitch && langDropdown) {
+  langSwitch.onclick = (e) => {
+    e.stopPropagation()
+    langDropdown.classList.toggle('hidden')
+  }
+
+  langDropdown.querySelectorAll('button').forEach(btn => {
+    btn.onclick = () => {
+      const lang = btn.dataset.lang
+      langLabel.textContent = btn.textContent.slice(0,2).toUpperCase()
+      setLanguage(lang)
+    }
+  })
+}
+
+document.addEventListener('click', () => {
+  langDropdown?.classList.add('hidden')
+})
+
+
+
+
+  
+
+
+
+

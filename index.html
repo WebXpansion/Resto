@@ -10,9 +10,25 @@
 
   <link href="https://fonts.googleapis.com/css2?family=Italiana&family=Pacifico&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+  <script>
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement(
+        { pageLanguage: 'fr' },
+        'google_translate_element'
+      );
+    }
+    </script>
+    
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+    
 </head>
 
 <body>
+  <div id="google_translate_container">
+    <div id="google_translate_element"></div>
+  </div>
+  
 
   <!-- INTRO LOADER -->
   <div id="intro">
@@ -30,9 +46,14 @@
     <div class="menu-wrapper">
       <button class="menu-switch">
         <span class="menu-label">Carte du Midi</span>
+
+       
+        
+
         <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M5.5 8.25L11.2292 14.4375L16.7292 8.25" stroke="black" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
+        </svg>
+
       </button>
   
       <div class="menu-dropdown hidden">
