@@ -180,17 +180,26 @@ document.getElementById('overlay-confirm').onclick = () => {
 function isAppleDevice() {
   return /iPhone|iPod|iPad/.test(navigator.userAgent)
 }
+function openQuickLook(usdzUrl) {
+  const link = document.createElement('a')
+  link.setAttribute('rel', 'ar')
+  link.setAttribute('href', usdzUrl)
+
+  const img = document.createElement('img')
+  img.src = '/images/ar.svg'
+  img.style.display = 'none'
+
+  link.appendChild(img)
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}
 
 arBtn.onclick = () => {
   if (!previewItem?.model || !isAppleDevice()) return
 
-  const usdz = previewItem.model.replace('.glb', '.usdz')
-  const link = document.createElement('a')
-  link.rel = 'ar'
-  link.href = `/models/${usdz}`
-  document.body.appendChild(link)
-  link.click()
-  document.body.removeChild(link)
+  const usdzUrl = `/models/${previewItem.model.replace('.glb', '.usdz')}`
+  openQuickLook(usdzUrl)
 }
 
 // ===============================
