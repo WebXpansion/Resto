@@ -26,6 +26,7 @@ window.activeMenu = activeMenu
 window.selections = selections
 
 window.addEventListener('load', () => {
+  // 🎬 Intro
   const intro = document.getElementById('intro')
   const discover = document.getElementById('intro-discover')
   const menu = document.getElementById('intro-menu')
@@ -36,7 +37,11 @@ window.addEventListener('load', () => {
   setTimeout(() => {
     intro.classList.add('hidden')
   }, 2000)
+
+  // 🌍 Langue (Google Translate)
+  updateLangLabelFromGoogle()
 })
+
 
 
 // ===============================
@@ -407,8 +412,33 @@ document.addEventListener('click', () => {
 
 
 
+function getGoogleTranslateLang() {
+  const match = document.cookie.match(/googtrans=([^;]+)/)
+  if (!match) return 'fr'
 
-  
+  const value = decodeURIComponent(match[1])
+  const parts = value.split('/')
+
+  return parts[2] || 'fr'
+}
+
+function updateLangLabelFromGoogle() {
+  const lang = getGoogleTranslateLang()
+  const label = document.querySelector('.lang-label')
+
+  if (!label) return
+
+  const map = {
+    fr: 'FR',
+    en: 'EN',
+    es: 'ES',
+    it: 'IT',
+    'zh-CN': 'ZH'
+  }
+
+  label.textContent = map[lang] || lang.toUpperCase()
+}
+
 
 
 
