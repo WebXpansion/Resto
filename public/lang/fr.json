@@ -1,0 +1,38 @@
+{
+    "menu.lunch": "Carte du midi",
+    "menu.south": "Carte du soir",
+    "filtre-formule":"Formule",
+    "filtre-boisson":"Boisson",
+    "filtre-entree":"Entrées",
+    "filtre-plat":"Plats",
+    "filtre-dessert":"Desserts",
+
+    "group.cocktails": "Cocktails",
+    "group.jus-sodas" :"Jus et Sodas",
+    "group.entree":"Entrées",
+    "group.pates" :"Pâtes",
+    "group.formule.enfant": "Menu Enfant",
+    "groupe.formule.degustation":"Menu Degustation",
+  
+    "drink.coca.title": "Coca-Cola",
+    "drink.coca.desc": "Boisson gazeuse rafraichissante",
+
+    "formule.degustation.title": " Menu Dégustation",
+    "formule.degustation.desc": "Entrée du Chef + Plat du Chef + Plateau de dessert",
+
+    "formule.jeune.title": "Pour les jeunes",
+    "formule.jeune.desc": "Entrée + Plat ou Plat + Dessert",
+
+    "starter.tartare-saumon.title" :"Tartare de saumon",
+    "starter.tartare-saumon.desc" :"Saumon frais et avocat",
+
+    "plat.Linguine-ai-frutti-di-mar.title" : "Linguine ai frutti di mare",
+    "plat.Linguine-ai-frutti-di-mar.desc" : "Pâtes aux fruits de mer",
+
+    "plat.panna-nutella.title" : "Panna Cotta au Nutella",
+    "plat.panna-nutella.desc" : "Crème cuite Italienne à la Nutella",
+
+    "plat.tiramisu-pistache.title": "Tiramisù au Pistache",
+    "plat.tiramisu-pistache.desc": "Crème au mascarpone et pistache"
+  }
+  

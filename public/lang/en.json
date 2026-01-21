@@ -1,0 +1,41 @@
+{
+    "menu.lunch": "Lunch menu",
+    "menu.south": "Dinner menu",
+    "filtre-formule":"Set menu",
+    "filtre-boisson":"Drinks",
+    "filtre-entree":"Starters",
+    "filtre-plat":"Mains",
+    "filtre-dessert":"Desserts",
+
+     "group.cocktails": "Cocktails",
+     "group.jus-sodas": "Juices & Soft drinks",
+     "group.entree":"Starters",
+     "group.pates": "Pasta",
+     "group.formule.enfant": "Kids menu",
+     "groupe.formule.degustation":"Degustation menu",
+  
+    "drink.coca.title": "Coca",
+    "drink.coca.desc": "Refreshing sparkling drink",
+
+    "formule.degustation.title": "Tasting Menu",
+    "formule.degustation.desc": "Chef's starter + Chef's main course + Dessert platter",
+
+    "formule.jeune.title": "For kids",
+    "formule.jeune.desc": "Starter + Main course or Main course + Dessert",
+
+    "starter.tartare-saumon.title": "Salmon tartare",
+    "starter.tartare-saumon.desc": "Fresh salmon and avocado",
+
+    "plat.Linguine-ai-frutti-di-mar.title": "Linguine ai frutti di mare",
+    "plat.Linguine-ai-frutti-di-mar.desc": "Seafood pasta",
+
+    "plat.panna-nutella.title": "Nutella panna cotta",
+    "plat.panna-nutella.desc": "Italian cooked cream with Nutella",
+
+    "plat.tiramisu-pistache.title": "Pistachio tiramisu",
+    "plat.tiramisu-pistache.desc": "Mascarpone cream with pistachio"
+
+
+
+  }
+  

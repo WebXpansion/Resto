@@ -535,12 +535,13 @@ img.card-check {
   position: relative;
 }
 
-.menu-switch img {
+.menu-switch svg {
   transition: transform 0.3s ease;
 }
 
-.menu-switch.open img {
-  transform: rotate(180deg);
+.menu-switch.open svg {
+  transform: rotate(-180deg);
+  transition: transform 0.3s ease;
 }
 
 .menu-dropdown {
@@ -551,7 +552,7 @@ img.card-check {
   border-radius: 12px;
   box-shadow: 0 10px 30px rgba(0,0,0,0.15);
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   overflow: hidden;
   z-index: 50;
 }
@@ -707,30 +708,52 @@ body.theme-soir .menu-group-title {
   gap: 6px;
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
 }
 
 .lang-dropdown {
   position: absolute;
-  top: 42px;
+  top: 32px;
   right: 0;
   background: white;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,.15);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+  display: flex;
+  flex-direction: row;
   overflow: hidden;
   z-index: 50;
 }
 
 .lang-dropdown button {
-  padding: 12px 18px;
+  padding: 14px 20px;
   background: none;
   border: none;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
   text-align: left;
-  font-size: 14px;
   cursor: pointer;
 }
 
-.lang-dropdown button:hover {
-  background: #00000008;
+.lang-dropdown button:not(:last-child) {
+  border-bottom: 1px solid #00000012;
+}
+
+/* langue active */
+.lang-dropdown button.active {
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.lang-dropdown.hidden {
+  display: none;
+}
+
+.menu-wrapper-right {
+  display: flex;
+  gap: 6px;
+  align-items: center;
 }
 
 .hidden {
@@ -818,9 +841,7 @@ body.theme-soir .menu-dropdown {
   background: #2b2c2d;
 }
 
-body.theme-soir .menu-dropdown button:not(:last-child) {
-  border-bottom: 1px solid #ffffff12;
-}
+
 
 body.theme-soir .card-row:not(:last-child) {
   border-bottom: 1px dashed rgb(255 255 255 / 15%);
@@ -867,4 +888,9 @@ body.theme-soir .card .info span {
 
 body.theme-soir .card-row.with-divider {
   border-bottom: 1px dashed #ffffff30;
+}
+
+
+body.theme-soir .lang-dropdown {
+  background: #2b2c2d;
 }

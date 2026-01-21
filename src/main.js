@@ -6,13 +6,52 @@ import { initViewer } from './viewer.js'
 // ===============================
 // 🔢 ÉTAT GLOBAL
 // ===============================
+
+window.currentLang = 'fr'
+
+
 let previewItem = null
 let currentQty = 1
+
+window.TRANSLATIONS = {}
+
+window.t = function (key) {
+  return window.TRANSLATIONS[key] ?? key
+}
+
+
+function loadLang(lang) {
+  window.currentLang = lang
+
+  fetch(`/lang/${lang}.json?v=${Date.now()}`)
+    .then(r => r.json())
+    .then(data => {
+      window.TRANSLATIONS = data
+
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.dataset.i18n
+        if (data[key]) el.textContent = data[key]
+      })
+
+      renderMenu(currentFilter)
+      requestAnimationFrame(animateCards)
+    })
+}
+
+window.loadLang = loadLang
+
+
+
+
+
+
+
+
 
 const selections = {
   drink: [],
   starter: [],
-  pizza: [],
+  plat: [],
   dessert: [],
   formule: []
 }
@@ -98,8 +137,9 @@ window.openOverlay = (item) => {
   currentQty = existing ? existing.quantity : 1
   qtyValue.textContent = currentQty
 
-  sheetTitle.textContent = item.title
-  sheetDesc.textContent = item.description
+  sheetTitle.textContent = t(item.titleKey)
+  sheetDesc.textContent = t(item.descriptionKey)
+  
   sheetPrice.textContent = `${item.price.toFixed(2)}€`
 
   overlay.classList.remove('hidden')
@@ -206,6 +246,7 @@ arBtn.onclick = () => {
 // 🚀 INIT
 // ===============================
 let currentFilter = 'formule'
+loadLang('fr')
 renderMenu(currentFilter)
 requestAnimationFrame(animateCards)
 
@@ -335,7 +376,8 @@ function renderRecap() {
 
 
       card.innerHTML = `
-        <img src="${item.image}" alt="${item.title}">
+        <img src="${item.image}" alt="${t(item.titleKey)}">
+
         <div class="info">
           <div class="info-titre">
           ${item.menu !== 'both' && item.menu !== activeMenu
@@ -343,7 +385,7 @@ function renderRecap() {
             : ''
           }
           
-          <h3>${item.title}</h3>
+          <h3>${t(item.titleKey)}</h3>
           
             <div class="price-row">
               <span class="price">${item.price.toFixed(2)}€</span>
@@ -374,4 +416,40 @@ function renderRecap() {
   })
 }
 
+
+const langSwitch = document.querySelector('.lang-switch')
+const langDropdown = document.querySelector('.lang-dropdown')
+const langLabel = document.querySelector('.lang-label')
+const langFlag = document.querySelector('.lang-flag')
+
+if (langSwitch && langDropdown) {
+  langSwitch.onclick = (e) => {
+    e.stopPropagation()
+    langDropdown.classList.toggle('hidden')
+  }
+
+  langDropdown.querySelectorAll('button').forEach(btn => {
+    btn.onclick = () => {
+      const lang = btn.dataset.lang
+
+      // 🔄 traduction
+      window.loadLang(lang)
+
+      // UI
+      langLabel.textContent = lang.toUpperCase()
+      langFlag.textContent = lang === 'fr' ? '🇫🇷' : '🇺🇸'
+
+      langDropdown.querySelectorAll('button')
+        .forEach(b => b.classList.remove('active'))
+
+      btn.classList.add('active')
+      langDropdown.classList.add('hidden')
+    }
+  })
+}
+
+// clic extérieur → fermeture
+document.addEventListener('click', () => {
+  langDropdown?.classList.add('hidden')
+})
 

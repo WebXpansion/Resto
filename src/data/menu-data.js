@@ -1,188 +1,125 @@
 export const MENU = [
-    {
-      id: 'Vin',
-      category: 'formule',
-      title: 'Pour les jeunes',
-      description: 'Entrée + Plat ou Plat + Dessert',
-      price: 18.50,
-      image: '/images/fromage.webp',
-      menu: 'both', // 'midi' | 'soir' | 'both'
-      model: 'wine-1.glb',
-      group: 'Menu Enfant',
-      scale: 18
-    },
-    {
-      id: 'Menu Dégustation',
-      category: 'formule',
-      title: 'Menu Dégustation',
-      description: 'Entrée du Chef + Plat du Chef + Plateau de dessert',
-      price: 47.50,
-      image: '/images/fromage.webp',
-      menu: 'both', // 'midi' | 'soir' | 'both'
-      model: 'wine-1.glb',
-      group: 'Menu Dégustation',
-      scale: 18
-    },
-    {
-      id: 'Coca',
-      category: 'drink',
-      title: 'Coca',
-      description: '',
-      price: 4.50,
-      image: '/images/coca.webp',
-      menu: 'both', 
-      model: 'coca.glb',
-      group: 'Cocktails',
-      scale: 12
-    },
-    {
-      id: 'Vin',
-      category: 'drink',
-      title: 'Vin',
-      description: '',
-      price: 4.50,
-      image: '/images/coca.webp',
-      menu: 'midi', 
-      model: 'coca.glb',
-      group: 'Jus et soda',
-      scale: 12
-    },
-    {
-      id: 'Ice tea',
-      category: 'drink',
-      title: 'Ice tea',
-      description: '',
-      price: 4.50,
-      image: '/images/coca.webp',
-      menu: 'midi', 
-      model: 'coca.glb',
-      group: 'Cocktails',
-      scale: 12
-    },
-    {
-      id: 'Jus',
-      category: 'drink',
-      title: 'Jus',
-      description: 'Pomme, fraise, menthe',
-      price: 2.50,
-      image: '/images/coca.webp',
-      menu: 'both', 
-      model: 'coca.glb',
-      scale: 12
-    },
-    {
-      id: 'Cristaline',
-      category: 'drink',
-      title: 'Cristaline',
-      description: 'Pomme, fraise, menthe',
-      price: 1.50,
-      image: '/images/coca.webp',
-      menu: 'midi', 
-      model: 'coca.glb',
-      scale: 12
-    },
-    {
-      id: 'Bière',
-      category: 'drink',
-      title: 'Bière',
-      description: 'Clameur',
-      price: 6.50,
-      image: '/images/coca.webp',
-      menu: 'both', 
-      model: 'coca.glb',
-      scale: 12
-    },
+  //formule
+  {
+    id: 'Menu jeune',
+    category: 'formule',
+    titleKey: 'formule.jeune.title',
+    descriptionKey: 'formule.jeune.desc',
+    price: 18.50,
+    image: '/images/fromage.webp',
+    menu: 'both', // 'midi' | 'soir' | 'both'
+    model: 'wine-1.glb',
+    groupKey: 'group.formule.enfant',
+    scale: 18
+  },
+  {
+    id: 'Menu Dégustation',
+    category: 'formule',
+    titleKey: 'formule.degustation.title',
+    descriptionKey: 'formule.degustation.desc',
+    price: 47.50,
+    image: '/images/fromage.webp',
+    menu: 'both', 
+    model: 'wine-1.glb',
+    groupKey: 'groupe.formule.degustation',
+    scale: 18
+  },
 
-    {
-      id: 'tartare-saumon',
-      category: 'starter',
-      title: 'Tartare de saumon',
-      description: 'Saumon frais et avocat',
-      price: 14.00,
-      image: '/images/tartare.webp',
-      menu: 'both', 
-      model: 'tartare_saumon.glb',
-      group: 'Froid',
-      scale: 10
-    },
-    {
-      id: 'hamburger',
-      category: 'pizza',
-      title: 'hamburger',
-      description: 'Saumon frais et avocat',
-      price: 14.00,
-      image: '/images/tartare.webp',
-      menu: 'both', 
-      model: 'tartare_saumon.glb',
-      group: 'Les plats',
-      scale: 10
-    },
-    {
-      id: 'Linguine-ai-frutti-di-mare',
-      category: 'pizza',
-      title: 'Linguine ai frutti di mare',
-      description: 'Pâtes aux fruits de mer',
-      price: 24.00,
-      image: '/images/linguini-fruit-de-mer.webp',
-      menu: 'both', 
-      model: 'linguine_ai_frutti_di_mare2.glb',
-      scale: 9
-    },
+    //boisson
+
+  {
+    id: 'Coca',
+    category: 'drink',
+    titleKey: 'drink.coca.title',
+    descriptionKey: 'drink.coca.desc',
+    price: 11.50,
+    image: '/images/coca.webp',
+    menu: 'both',
+    model: 'coca.glb',
+    groupKey: 'group.cocktails',
+    scale: 12
+  },
+  {
+    id: 'Coca',
+    category: 'drink',
+    titleKey: 'drink.coca.title',
+    descriptionKey: 'drink.coca.desc',
+    price: 11.50,
+    image: '/images/coca.webp',
+    menu: 'both',
+    model: 'coca.glb',
+    groupKey: 'group.cocktails',
+    scale: 12
+  },
+  {
+    id: 'Coca',
+    category: 'drink',
+    titleKey: 'drink.coca.title',
+    descriptionKey: 'drink.coca.desc',
+    price: 11.50,
+    image: '/images/coca.webp',
+    menu: 'both',
+    model: 'coca.glb',
+    groupKey: 'group.jus-sodas',
+    scale: 12
+  },
+
+      //Starter
+
+  {
+    id: 'tartare-saumon',
+    category: 'starter',
+    titleKey: 'starter.tartare-saumon.title',
+    descriptionKey: 'starter.tartare-saumon.desc',
+    price: 11.50,
+    image: '/images/tartare.webp',
+    menu: 'both',
+    model: 'tartare_saumon.glb',
+    groupKey: 'group.entree',
+    scale: 12
+  },
+
+      //Plats
+           
+  {
+    id: 'Linguine-ai-frutti-di-mare',
+    category: 'plat',
+    titleKey: 'plat.Linguine-ai-frutti-di-mar.title',
+    descriptionKey: 'plat.Linguine-ai-frutti-di-mar.desc',
+    price: 11.50,
+    image: '/images/linguini-fruit-de-mer.webp',
+    menu: 'both',
+    model: 'linguine_ai_frutti_di_mare2.glb',
+    groupKey: 'group.pates',
+    scale: 12
+  },
+
+        //Desserts
+
     {
       id: 'panna_cotta_Nutella',
       category: 'dessert',
-      title: 'Panna Cotta au Nutella',
-      description: 'Crème cuite Italienne à la Nutella',
-      price: 8.00,
+      titleKey: 'plat.panna-nutella.title',
+      descriptionKey: 'plat.panna-nutella.desc',
+      price: 6.50,
       image: '/images/panna-nutella.webp',
-      menu: 'midi',
+      menu: 'both',
       model: 'panna_cotta_alla_nutella.glb',
+      groupKey: 'group.pates',
       scale: 10
     },
     {
       id: 'Tiramisù-al-Pistacchio',
       category: 'dessert',
-      title: 'Tiramisù au Pistache',
-      description: 'Crème au mascarpone et pistache',
-      price: 9.00,
+      titleKey: 'plat.tiramisu-pistache.title',
+      descriptionKey: 'plat.tiramisu-pistache.desc',
+      price: 8.50,
       image: '/images/tiramisu-pistache.webp',
-      menu: 'midi',
+      menu: 'both',
       model: 'tiramisu_al_pistacchio.glb',
-      scale: 12
-    },
-    {
-      id: 'planche-charcuterie',
-      category: 'starter',
-      title: 'Planche de charcuterie',
-      description: 'Mélange de charcuterie, olives et fromages Italiens',
-      price: 16.00,
-      image: '/images/planche-charcuterie.webp',
-      menu: 'soir',
-      model: 'planche_de_charcuterie.glb',
-      scale: 7
-    },
-    {
-      id: 'pizza-fromage',
-      category: 'pizza',
-      title: 'Fromage',
-      description: 'Crème / Emmental / Chèvre / Gorgonzola',
-      price: 12.00,
-      image: '/images/roquette.webp',
-      menu: 'soir',
-      model: 'pizza-roquette.glb',
-      scale: 8
-    },
-    {
-      id: 'pasta-carbonara',
-      category: 'pizza',
-      title: 'Carbonara',
-      description: 'Lardons / Crème / Parmesan',
-      price: 13.00,
-      image: '/images/roquette.webp',
-      menu: 'soir',
-      model: 'pizza-roquette.glb',
+      groupKey: 'group.pates',
       scale: 12
     }
-   
-  ]
-  
+      
+]
+
