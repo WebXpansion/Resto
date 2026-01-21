@@ -706,7 +706,7 @@ body.theme-soir .menu-group-title {
   align-items: center;
   gap: 6px;
   font-family: "Open Sans", sans-serif;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 .lang-dropdown {
@@ -745,6 +745,10 @@ body.theme-soir .menu-group-title {
   pointer-events: none;
 }
 
+.top-header-inner {
+  display: flex;
+  align-items: center;
+}
 
 
 /* =========================
