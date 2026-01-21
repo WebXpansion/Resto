@@ -26,7 +26,6 @@ window.activeMenu = activeMenu
 window.selections = selections
 
 window.addEventListener('load', () => {
-  // 🎬 Intro
   const intro = document.getElementById('intro')
   const discover = document.getElementById('intro-discover')
   const menu = document.getElementById('intro-menu')
@@ -37,11 +36,7 @@ window.addEventListener('load', () => {
   setTimeout(() => {
     intro.classList.add('hidden')
   }, 2000)
-
-  // 🌍 Langue (Google Translate)
-  updateLangLabelFromGoogle()
 })
-
 
 
 // ===============================
@@ -378,68 +373,5 @@ function renderRecap() {
     })
   })
 }
-
-
-const langSwitch = document.querySelector('.lang-switch')
-const langDropdown = document.querySelector('.lang-dropdown')
-const langLabel = document.querySelector('.lang-label')
-
-function setLanguage(lang) {
-  const domain = location.hostname
-  document.cookie = `googtrans=/fr/${lang}; path=/; domain=${domain}`
-  document.cookie = `googtrans=/fr/${lang}; path=/`
-  location.reload()
-}
-
-if (langSwitch && langDropdown) {
-  langSwitch.onclick = (e) => {
-    e.stopPropagation()
-    langDropdown.classList.toggle('hidden')
-  }
-
-  langDropdown.querySelectorAll('button').forEach(btn => {
-    btn.onclick = () => {
-      const lang = btn.dataset.lang
-      langLabel.textContent = btn.textContent.slice(0,2).toUpperCase()
-      setLanguage(lang)
-    }
-  })
-}
-
-document.addEventListener('click', () => {
-  langDropdown?.classList.add('hidden')
-})
-
-
-
-function getGoogleTranslateLang() {
-  const match = document.cookie.match(/googtrans=([^;]+)/)
-  if (!match) return 'fr'
-
-  const value = decodeURIComponent(match[1])
-  const parts = value.split('/')
-
-  return parts[2] || 'fr'
-}
-
-function updateLangLabelFromGoogle() {
-  const lang = getGoogleTranslateLang()
-  const label = document.querySelector('.lang-label')
-
-  if (!label) return
-
-  const map = {
-    fr: 'FR',
-    en: 'EN',
-    es: 'ES',
-    it: 'IT',
-    'zh-CN': 'ZH'
-  }
-
-  label.textContent = map[lang] || lang.toUpperCase()
-}
-
-
-
 
 

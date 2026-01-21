@@ -737,42 +737,7 @@ body.theme-soir .menu-group-title {
   display: none !important;
 }
 
-#google_translate_container {
-  position: fixed;
-  bottom: -100px;
-  left: -100px;
-  opacity: 0;
-  pointer-events: none;
-}
 
-.top-header-inner {
-  display: flex;
-  align-items: center;
-}
-
-
-/* Cache le bandeau Google Translate */
-.goog-te-banner-frame.skiptranslate {
-  display: none !important;
-}
-
-/* Empêche Google de pousser la page vers le bas */
-body {
-  top: 0 !important;
-}
-
-/* Cache aussi certains wrappers Google */
-.goog-te-gadget {
-  display: none !important;
-}
-
-html {
-  overflow-x: hidden;
-}
-
-.VIpgJd-ZVi9od-ORHb-OEVmcd{
-  display: none;
-}
 
 
 /* =========================
