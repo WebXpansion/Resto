@@ -2,7 +2,8 @@ import * as THREE from 'three'
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js'
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js'
-import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
+import { HDRLoader } from 'three/examples/jsm/loaders/HDRLoader.js'
+
 import { PMREMGenerator } from 'three'
 
 let renderer, scene, camera
@@ -46,7 +47,7 @@ export function initViewer(item, onLoaded) {
     antialias: true
   })
 
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.4))
   renderer.setSize(canvas.clientWidth, canvas.clientHeight, false)
 
   renderer.outputColorSpace = THREE.SRGBColorSpace
@@ -92,14 +93,14 @@ export function initViewer(item, onLoaded) {
   const pmremGenerator = new PMREMGenerator(renderer)
   pmremGenerator.compileEquirectangularShader()
 
-  new RGBELoader()
-    .load('/hdr/studio.hdr', (hdrTexture) => {
-      const envMap = pmremGenerator.fromEquirectangular(hdrTexture).texture
-      scene.environment = envMap
-      scene.background = null
-      hdrTexture.dispose()
-      pmremGenerator.dispose()
-    })
+  new HDRLoader()
+  .load('/hdr/studio.hdr', (hdrTexture) => {
+    const envMap = pmremGenerator.fromEquirectangular(hdrTexture).texture
+    scene.environment = envMap
+    scene.background = null
+    hdrTexture.dispose()
+    pmremGenerator.dispose()
+  })
 
   renderer.setAnimationLoop(() => {
     controls.update()

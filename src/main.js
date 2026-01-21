@@ -1,104 +1,30 @@
 import './style.css'
 import './ui/menu.css'
-import { renderStep } from './ui/menu.js'
+import { renderMenu } from './ui/menu.js'
 import { initViewer } from './viewer.js'
 
 // ===============================
-// 🧭 ÉTAPES
+// 🔢 ÉTAT GLOBAL
 // ===============================
-const STEPS = [
-  { key: 'drink', label: 'Boisson' },
-  { key: 'starter', label: 'Starter' },
-  { key: 'pizza', label: 'Plat' },
-  { key: 'dessert', label: 'Dessert' },
-  { key: 'recap', label: 'Récapitulatif' }
-]
-
-
-
-let stepIndex = 0
 let previewItem = null
 let currentQty = 1
-
-const qtyValue = document.getElementById('qty-value')
-const qtyPlus = document.getElementById('qty-plus')
-const qtyMinus = document.getElementById('qty-minus')
-const arBtn = document.getElementById('ar')
-
-qtyPlus.addEventListener('click', () => {
-  currentQty++
-  qtyValue.textContent = currentQty
-})
-
-qtyMinus.addEventListener('click', () => {
-  if (currentQty > 0) {
-    currentQty--
-    qtyValue.textContent = currentQty
-  }
-})
-
-
-
 
 const selections = {
   drink: [],
   starter: [],
   pizza: [],
-  dessert: []
+  dessert: [],
+  formule: []
 }
 
-
-window.getCurrentSelection = () => {
-  const stepKey = STEPS[stepIndex].key
-  return selections[stepKey]
-}
+let overlayFromRecap = false
+let activeMenu = 'midi'
+window.activeMenu = activeMenu
 
 
 
+window.selections = selections
 
-// ===============================
-// 🎯 ELEMENTS UI
-// ===============================
-const sheetBackBtn = document.getElementById('sheet-back')
-
-
-const stepTitle = document.getElementById('step-title')
-
-
-const nextBtn = document.getElementById('next')
-
-const overlay = document.getElementById('overlay')
-const sheet = document.getElementById('sheet')
-const sheetTitle = document.getElementById('sheet-title')
-const sheetDesc = document.getElementById('sheet-desc')
-const sheetPrice = document.getElementById('sheet-price')
-const viewerLoader = document.getElementById('viewer-loader')
-const overlaySelectBtn = document.getElementById('overlay-select')
-
-const stepCurrent = document.getElementById('step-current')
-const stepTotal = document.getElementById('step-total')
-const stepBackBtn = document.getElementById('step-back')
-
-const STEPS_WITHOUT_RECAP = STEPS.filter(step => step.key !== 'recap')
-stepTotal.textContent = STEPS_WITHOUT_RECAP.length
-
-
-function animateCards() {
-  const rows = document.querySelectorAll('.card-row')
-
-  rows.forEach((row, index) => {
-    row.classList.remove('visible')
-
-    setTimeout(() => {
-      row.classList.add('visible')
-    }, index * 80) // ⏱️ décalage entre cartes
-  })
-}
-
-
-// ===============================
-// 🎬 INTRO
-// ===============================
 window.addEventListener('load', () => {
   const intro = document.getElementById('intro')
   const discover = document.getElementById('intro-discover')
@@ -109,232 +35,93 @@ window.addEventListener('load', () => {
 
   setTimeout(() => {
     intro.classList.add('hidden')
-    startStep()
   }, 2000)
 })
 
+
 // ===============================
-// 🧠 STEP LOGIC
+// 🎯 ELEMENTS UI
 // ===============================
-function startStep() {
-  const step = STEPS[stepIndex]
-  const isRecap = step.key === 'recap'
+const qtyValue = document.getElementById('qty-value')
+const qtyPlus = document.getElementById('qty-plus')
+const qtyMinus = document.getElementById('qty-minus')
+const arBtn = document.getElementById('ar')
 
-  const stepFooter = document.querySelector('.step-footer')
-  const stepHeader = document.querySelector('.step-header')
+const overlay = document.getElementById('overlay')
+const sheet = document.getElementById('sheet')
+const sheetBackBtn = document.getElementById('sheet-back')
+const sheetTitle = document.getElementById('sheet-title')
+const sheetDesc = document.getElementById('sheet-desc')
+const sheetPrice = document.getElementById('sheet-price')
+const viewerLoader = document.getElementById('viewer-loader')
 
-  // ===============================
-  // 🎯 HEADER
-  // ===============================
-  if (isRecap) {
-    stepHeader.classList.add('recap')
-    stepTitle.textContent = 'Votre récapitulatif'
+const cartBadge = document.querySelector('.cart-badge')
+let cartCount = 0
+
+
+function updateCartBadge() {
+  if (cartCount > 0) {
+    cartBadge.classList.remove('hidden')
+    cartBadge.textContent = Math.min(cartCount, 99)
   } else {
-    stepHeader.classList.remove('recap')
-    animateTitle(step.label)
+    cartBadge.classList.add('hidden')
   }
-
-  // ===============================
-  // 🦶 FOOTER
-  // ===============================
-  if (isRecap) {
-    nextBtn.style.display = 'none'
-    stepFooter.classList.add('single')
-  } else {
-    nextBtn.style.display = 'flex'
-    stepFooter.classList.remove('single')
-  }
-
-  // Étape 1 → bouton plein width
-  if (stepIndex === 0 && !isRecap) {
-    stepFooter.classList.add('single')
-  }
-
-  // ===============================
-  // 🔢 COMPTEUR (SANS RÉCAP)
-  // ===============================
-  if (!isRecap) {
-    const currentStep = STEPS_WITHOUT_RECAP.findIndex(
-      s => s.key === step.key
-    )
-    stepCurrent.textContent = currentStep + 1
-  }
-
-  // ===============================
-  // ⬅️ BOUTON RETOUR
-  // ===============================
-  if (stepIndex > 0) {
-    stepBackBtn.classList.remove('hidden')
-  } else {
-    stepBackBtn.classList.add('hidden')
-  }
-
-  // ===============================
-  // 🧾 ÉTAPE RÉCAP
-  // ===============================
-  if (isRecap) {
-    renderRecap()
-    requestAnimationFrame(animateCards)
-    return
-  }
-  
-
-  // ===============================
-  // 🧭 ÉTAPES NORMALES
-  // ===============================
-  updateFooter()
-  renderStep(step.key)
-  requestAnimationFrame(animateCards)
 }
 
+// ===============================
+// ➕ / ➖ QUANTITÉ
+// ===============================
+qtyPlus.onclick = () => {
+  currentQty++
+  qtyValue.textContent = currentQty
+}
 
-
-sheetBackBtn.addEventListener('click', () => {
-  previewItem = null
-  closeOverlay()
-})
-
-stepBackBtn.addEventListener('click', () => {
-  if (stepIndex === 0) return
-
-  stepIndex--
-  startStep()
-})
-
+qtyMinus.onclick = () => {
+  if (currentQty > 0) {
+    currentQty--
+    qtyValue.textContent = currentQty
+  }
+}
 
 // ===============================
-// 🌐 OVERLAY API
+// 🌐 OVERLAY
 // ===============================
 window.openOverlay = (item) => {
   previewItem = item
-  if (!item.model) {
-    arBtn.style.display = 'none'
-  } else {
-    arBtn.style.display = 'flex'
-  }
 
-  const stepKey = item.category
-  const list = selections[stepKey]
+  arBtn.style.display = item.model ? 'flex' : 'none'
+
+  const list = selections[item.category] || []
+  const existing = list.find(e => e.item.id === item.id)
   
 
-  const existing = list.find(e => e.item.id === item.id)
-
-  // ✅ RESTAURATION DE LA QTÉ
   currentQty = existing ? existing.quantity : 1
   qtyValue.textContent = currentQty
+
   sheetTitle.textContent = item.title
   sheetDesc.textContent = item.description
-  sheetPrice.textContent = `${Number(item.price).toFixed(2)}€`
-
-  viewerLoader.classList.remove('hidden')
+  sheetPrice.textContent = `${item.price.toFixed(2)}€`
 
   overlay.classList.remove('hidden')
   sheet.classList.remove('hidden')
-  sheetBackBtn.classList.remove('hidden')
-  
+
   requestAnimationFrame(() => {
     overlay.classList.add('active')
     sheet.classList.add('active')
   })
-  
-  
 
-  const loaderText = viewerLoader.querySelector('span')
-
-  const canvas = document.getElementById('canvas')
-  
-  // Toujours montrer le loader au départ
   viewerLoader.classList.remove('hidden')
-  
-  if (!item.model) {
-    // ❌ Pas de 3D
-    loaderText.textContent = 'Aucune 3D disponible'
-  
-    // On masque le canvas
-    if (canvas) canvas.style.display = 'none'
-  
+
+  if (item.model) {
+    initViewer(item, () => viewerLoader.classList.add('hidden'))
   } else {
-    // ✅ 3D disponible
-    loaderText.textContent = 'Chargement…'
-  
-    if (canvas) canvas.style.display = 'block'
-  
-    initViewer(item, () => {
-      viewerLoader.classList.add('hidden')
-    })
+    viewerLoader.textContent = 'Aucune 3D disponible'
   }
-  
 }
 
-
-  
-
-
-
-overlay.addEventListener('click', (e) => {
-  // si on clique directement sur le fond
-  if (e.target === overlay) {
-    closeOverlay()
-  }
-})
-
-
-// ===============================
-// ✅ VALIDATION DEPUIS OVERLAY
-// ===============================
-document.getElementById('overlay-confirm').addEventListener('click', () => {
-  if (!previewItem) return
-
-  const stepKey = previewItem.category
-  const list = selections[stepKey]
-
-  const existing = list.find(e => e.item.id === previewItem.id)
-
-  if (existing) {
-    if (currentQty === 0) {
-      // ❌ Supprimer le produit
-      const index = list.findIndex(e => e.item.id === previewItem.id)
-      if (index !== -1) list.splice(index, 1)
-    } else {
-      // ✅ Mettre à jour la quantité
-      existing.quantity = currentQty
-    }
-  } else {
-    if (currentQty > 0) {
-      // ✅ Ajouter seulement si > 0
-      list.push({
-        item: previewItem,
-        quantity: currentQty
-      })
-    }
-  }
-  
-
-  previewItem = null
-  closeOverlay()
-
-  // ✅ BON RENDER SELON L’ÉTAPE
-  if (STEPS[stepIndex].key === 'recap') {
-    renderRecap()
-  } else {
-    renderStep(STEPS[stepIndex].key)
-  }
-
-  updateFooter()
-  requestAnimationFrame(animateCards)
-})
-
-
-
-
-// ===============================
-// ❌ FERMETURE OVERLAY
-// ===============================
 function closeOverlay() {
   overlay.classList.remove('active')
-  sheet.classList.remove('active') 
-
-  sheetBackBtn.classList.add('hidden')
+  sheet.classList.remove('active')
 
   setTimeout(() => {
     overlay.classList.add('hidden')
@@ -342,219 +129,238 @@ function closeOverlay() {
   }, 300)
 }
 
-
-
-
-
-
-
-
-// ===============================
-// 🎬 TITRE ANIMÉ
-// ===============================
-function animateTitle(label) {
-  stepTitle.classList.remove('visible')
-  stepTitle.textContent = label
-
-  requestAnimationFrame(() => {
-    stepTitle.classList.add('visible')
-  })
+overlay.onclick = (e) => {
+  if (e.target === overlay) closeOverlay()
 }
 
+sheetBackBtn.onclick = closeOverlay
 
 // ===============================
-// 🦶 FOOTER
+// ✅ CONFIRMATION
 // ===============================
-function updateFooter() {
-  const isBeforeRecap = stepIndex === STEPS.length - 2
+document.getElementById('overlay-confirm').onclick = () => {
+  if (!previewItem) return
 
-  nextBtn.disabled = false
+  const list = selections[previewItem.category]
+  const existing = list.find(e => e.item.id === previewItem.id)
 
-  if (isBeforeRecap) {
-    nextBtn.innerHTML = `
-      <span>Valider</span>
-      <svg class="icon-check" width="16" height="16" viewBox="0 0 24 24">
-        <path d="M20 6L9 17l-5-5" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    `
+  if (!existing && currentQty > 0) {
+    list.push({ item: previewItem, quantity: currentQty })
+    cartCount++
+    updateCartBadge()
+  }
+  
+  if (existing && currentQty === 0) {
+    list.splice(list.indexOf(existing), 1)
+    cartCount = Math.max(cartCount - 1, 0)
+    updateCartBadge()
+  }
+  
+  if (existing && currentQty > 0) {
+    existing.quantity = currentQty
+  }
+  
+
+  closeOverlay()
+
+  if (overlayFromRecap) {
+    renderRecap()
+    overlayFromRecap = false
   } else {
-    nextBtn.textContent = 'Continuer'
+    renderMenu(currentFilter)
+    requestAnimationFrame(animateCards)
   }
-}
-
-
-
-
-
-
-
-// ===============================
-// 👉 NAVIGATION
-// ===============================
-nextBtn.addEventListener('click', () => {
-  goNext()
-})
-
-
-
-
-
-
-function goNext() {
-  stepIndex++
-
-  if (stepIndex >= STEPS.length) {
-    console.log('Parcours terminé')
-    return
-  }
-
-  startStep()
+  
+  
 }
 
 // ===============================
-// 📱 AR BUTTON
+// 📱 AR (iOS)
 // ===============================
-
-
-
-
-
 function isAppleDevice() {
-  const ua = navigator.userAgent
-  return (
-    /iPhone|iPod/i.test(ua) ||
-    (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1)
-  )
+  return /iPhone|iPod|iPad/.test(navigator.userAgent)
 }
 
-arBtn.addEventListener('click', () => {
-  if (!previewItem || !previewItem.model) return
+arBtn.onclick = () => {
+  if (!previewItem?.model || !isAppleDevice()) return
 
-  if (isAppleDevice()) {
-    openQuickLook(previewItem.model)
-  }
-})
-
-
-// ===============================
-// 🍎 QUICK LOOK (USDZ)
-// ===============================
-function openQuickLook(modelName) {
-  const usdz = modelName.replace('.glb', '.usdz')
-
+  const usdz = previewItem.model.replace('.glb', '.usdz')
   const link = document.createElement('a')
-  link.setAttribute('rel', 'ar')
-  link.setAttribute('href', `/models/${usdz}`)
-
-  const img = document.createElement('img')
-  img.src = '/images/ar.svg'
-  img.style.display = 'none'
-
-  link.appendChild(img)
+  link.rel = 'ar'
+  link.href = `/models/${usdz}`
   document.body.appendChild(link)
   link.click()
   document.body.removeChild(link)
 }
 
+// ===============================
+// 🚀 INIT
+// ===============================
+let currentFilter = 'formule'
+renderMenu(currentFilter)
+requestAnimationFrame(animateCards)
 
-function renderRecap() {
-  const grid = document.getElementById('menu-grid')
-  grid.innerHTML = ''
+function animateCards() {
+  const rows = document.querySelectorAll('.card-row')
+
+  rows.forEach((row, index) => {
+    row.classList.remove('visible')
+
+    setTimeout(() => {
+      row.classList.add('visible')
+    }, index * 60)
+  })
+}
+
+//filtre
+const filterButtons = document.querySelectorAll('.filter')
+
+filterButtons.forEach(btn => {
+  btn.onclick = () => {
+    filterButtons.forEach(b => b.classList.remove('active'))
+    btn.classList.add('active')
+
+    currentFilter = btn.dataset.filter
+    renderMenu(currentFilter)
+    requestAnimationFrame(animateCards)
+  }
+})
 
 
-  const info = document.createElement('p')
-      info.className = 'recap-info'
-      info.textContent =
-        'Veuillez patienter, un membre de notre équipe va prendre en charge votre commande.'
+const menuSwitch = document.querySelector('.menu-switch')
+const menuDropdown = document.querySelector('.menu-dropdown')
+const menuLabel = document.querySelector('.menu-label')
 
-      grid.appendChild(info)
 
-      
-  const hasAnySelection = Object.values(selections)
-    .some(list => list.length > 0)
 
-  // ❌ Aucun produit sélectionné
-  if (!hasAnySelection) {
-    const empty = document.createElement('div')
-    empty.className = 'recap-empty'
-    empty.textContent = 'Aucune sélection pour le moment'
+menuSwitch.onclick = () => {
+  menuDropdown.classList.toggle('hidden')
+  menuSwitch.classList.toggle('open')
+}
 
-    grid.appendChild(empty)
-    return
+menuDropdown.querySelectorAll('button').forEach(btn => {
+  btn.onclick = () => {
+    menuDropdown.querySelectorAll('button')
+      .forEach(b => b.classList.remove('active'))
+  
+    btn.classList.add('active')
+    activeMenu = btn.dataset.menu
+    window.activeMenu = activeMenu
+  
+    if (activeMenu === 'soir') {
+      document.body.classList.add('theme-soir')
+    } else {
+      document.body.classList.remove('theme-soir')
+    }
+  
+    menuLabel.textContent = btn.textContent
+    menuDropdown.classList.add('hidden')
+    menuSwitch.classList.remove('open')
+  
+    // 🔁 SI ON EST SUR LE RÉCAP → RAFRAÎCHIR
+    if (!recapSection.classList.contains('hidden')) {
+      renderRecap()
+    } else {
+      renderMenu(currentFilter)
+      requestAnimationFrame(animateCards)
+    }
+  }
+  
+})
+
+
+// clic extérieur → fermeture
+document.addEventListener('click', (e) => {
+  if (!menuSwitch.contains(e.target) && !menuDropdown.contains(e.target)) {
+    menuDropdown.classList.add('hidden')
+    menuSwitch.classList.remove('open')
+  }
+})
+
+
+const recapSection = document.getElementById('recap-section')
+const recapGrid = document.getElementById('recap-grid')
+const menuGrid = document.getElementById('menu-grid')
+const filters = document.getElementById('filters')
+
+
+const cartBtn = document.querySelector('.cart-btn')
+const recapBackBtn = document.getElementById('recap-back-btn')
+
+if (cartBtn && recapBackBtn) {
+  cartBtn.onclick = () => {
+    filters.classList.add('hidden')
+    menuGrid.classList.add('hidden')
+    recapSection.classList.remove('hidden')
+    recapBackBtn.classList.remove('hidden')
+    renderRecap()
   }
 
-  Object.entries(selections).forEach(([category, list]) => {
-    if (list.length === 0) return
+  recapBackBtn.onclick = () => {
+    recapSection.classList.add('hidden')
+    recapBackBtn.classList.add('hidden')
+    filters.classList.remove('hidden')
+    menuGrid.classList.remove('hidden')
+    renderMenu(currentFilter)
+    requestAnimationFrame(animateCards)
+  }
 
+}
+
+
+
+
+
+function renderRecap() {
+  recapGrid.innerHTML = ''
+
+  Object.values(selections).forEach(list => {
     list.forEach(({ item, quantity }) => {
       const card = document.createElement('div')
-      card.className = 'card recap-card'
+      card.className = 'card'
 
-      // ✅ clic → réouverture overlay
-      card.addEventListener('click', () => {
+      card.onclick = () => {
+        overlayFromRecap = true
         window.openOverlay(item)
-      })
+      }
+
 
       card.innerHTML = `
         <img src="${item.image}" alt="${item.title}">
         <div class="info">
           <div class="info-titre">
-            <h3>${item.title}</h3>
-            <p>${item.description}</p>
+          ${item.menu !== 'both' && item.menu !== activeMenu
+            ? `<span class="recap-warning">Disponible le ${item.menu}</span>`
+            : ''
+          }
+          
+          <h3>${item.title}</h3>
+          
             <div class="price-row">
-              <span class="price">${Number(item.price).toFixed(2)}€</span>
+              <span class="price">${item.price.toFixed(2)}€</span>
               <span class="separator">|</span>
               <span class="qty">Qté : ${quantity}</span>
             </div>
-            <button class="btn-replace" data-category="${item.category}">
-              Modifier
-            </button>
-
-
+            <button class="btn-replace">Modifier</button>
           </div>
         </div>
       `
 
+      card.querySelector('.btn-replace').onclick = (e) => {
+        e.stopPropagation()
+      
+        overlayFromRecap = true
+        window.openOverlay(item)
+      }
+      
+
+      
+
       const wrapper = document.createElement('div')
-      wrapper.className = 'card-row'
+      wrapper.className = 'card-row visible'
       wrapper.appendChild(card)
 
-      grid.appendChild(wrapper)
-
-      
-
-
-      const replaceBtn = card.querySelector('.btn-replace')
-
-      replaceBtn.addEventListener('click', (e) => {
-        e.stopPropagation() // ⛔ empêche le clic carte
-      
-        const targetCategory = item.category
-      
-        const targetIndex = STEPS.findIndex(
-          step => step.key === targetCategory
-        )
-      
-        if (targetIndex !== -1) {
-          stepIndex = targetIndex
-          startStep()
-        }
-      })
-      
-
+      recapGrid.appendChild(wrapper)
     })
   })
 }
-
-
-
-function categoryLabel(key) {
-  switch (key) {
-    case 'drink': return 'Boisson'
-    case 'starter': return 'Starter'
-    case 'pizza': return 'Plat'
-    case 'dessert': return 'Dessert'
-    default: return ''
-  }
-}
-
