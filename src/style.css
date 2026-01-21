@@ -666,6 +666,19 @@ button.btn-replace {
 
 
 
+.menu-group-title {
+  margin: 24px 16px 0px;
+  font-family: "Italiana", serif;
+  font-size: 20px;
+}
+
+body.theme-soir .menu-group-title {
+  color: white;
+}
+
+.card-row.with-divider {
+  border-bottom: 1px dashed #00000020;
+}
 
 
 /* =========================
@@ -793,3 +806,6 @@ body.theme-soir .card .info span {
   fill: #ffffff96;
 }
 
+body.theme-soir .card-row.with-divider {
+  border-bottom: 1px dashed #ffffff30;
+}

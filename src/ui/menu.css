@@ -111,9 +111,6 @@ button{
     padding:12px;
 }
 
-.card-row:not(:last-child) {
-  border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
-}
 
 
 

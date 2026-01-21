@@ -8,6 +8,19 @@ export const MENU = [
       image: '/images/fromage.webp',
       menu: 'both', // 'midi' | 'soir' | 'both'
       model: 'wine-1.glb',
+      group: 'Menu Enfant',
+      scale: 18
+    },
+    {
+      id: 'Menu Dégustation',
+      category: 'formule',
+      title: 'Menu Dégustation',
+      description: 'Entrée du Chef + Plat du Chef + Plateau de dessert',
+      price: 47.50,
+      image: '/images/fromage.webp',
+      menu: 'both', // 'midi' | 'soir' | 'both'
+      model: 'wine-1.glb',
+      group: 'Menu Dégustation',
       scale: 18
     },
     {
@@ -17,8 +30,9 @@ export const MENU = [
       description: '',
       price: 4.50,
       image: '/images/coca.webp',
-      menu: 'midi', 
+      menu: 'both', 
       model: 'coca.glb',
+      group: 'Cocktails',
       scale: 12
     },
     {
@@ -27,11 +41,58 @@ export const MENU = [
       title: 'Vin',
       description: '',
       price: 4.50,
-      image: '/images/vin.webp',
-      menu: 'soir', 
-      model: 'wine-1.glb',
-      scale: 19
+      image: '/images/coca.webp',
+      menu: 'midi', 
+      model: 'coca.glb',
+      group: 'Jus et soda',
+      scale: 12
     },
+    {
+      id: 'Ice tea',
+      category: 'drink',
+      title: 'Ice tea',
+      description: '',
+      price: 4.50,
+      image: '/images/coca.webp',
+      menu: 'midi', 
+      model: 'coca.glb',
+      group: 'Cocktails',
+      scale: 12
+    },
+    {
+      id: 'Jus',
+      category: 'drink',
+      title: 'Jus',
+      description: 'Pomme, fraise, menthe',
+      price: 2.50,
+      image: '/images/coca.webp',
+      menu: 'both', 
+      model: 'coca.glb',
+      scale: 12
+    },
+    {
+      id: 'Cristaline',
+      category: 'drink',
+      title: 'Cristaline',
+      description: 'Pomme, fraise, menthe',
+      price: 1.50,
+      image: '/images/coca.webp',
+      menu: 'midi', 
+      model: 'coca.glb',
+      scale: 12
+    },
+    {
+      id: 'Bière',
+      category: 'drink',
+      title: 'Bière',
+      description: 'Clameur',
+      price: 6.50,
+      image: '/images/coca.webp',
+      menu: 'both', 
+      model: 'coca.glb',
+      scale: 12
+    },
+
     {
       id: 'tartare-saumon',
       category: 'starter',
@@ -41,6 +102,19 @@ export const MENU = [
       image: '/images/tartare.webp',
       menu: 'both', 
       model: 'tartare_saumon.glb',
+      group: 'Froid',
+      scale: 10
+    },
+    {
+      id: 'hamburger',
+      category: 'pizza',
+      title: 'hamburger',
+      description: 'Saumon frais et avocat',
+      price: 14.00,
+      image: '/images/tartare.webp',
+      menu: 'both', 
+      model: 'tartare_saumon.glb',
+      group: 'Les plats',
       scale: 10
     },
     {
@@ -50,7 +124,7 @@ export const MENU = [
       description: 'Pâtes aux fruits de mer',
       price: 24.00,
       image: '/images/linguini-fruit-de-mer.webp',
-      menu: 'both', // 'midi' | 'soir' | 'both'
+      menu: 'both', 
       model: 'linguine_ai_frutti_di_mare2.glb',
       scale: 9
     },
