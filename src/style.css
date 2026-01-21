@@ -787,3 +787,9 @@ body.theme-soir .viewer-loader{
 body.theme-soir .viewer-loader span{
  color: white;
 }
+
+
+body.theme-soir .card .info span {
+  fill: #ffffff96;
+}
+
